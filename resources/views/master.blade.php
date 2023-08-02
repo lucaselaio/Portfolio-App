@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Document</title>
+    <title>Portfolio</title>
 </head>
 <body>
     <script src="{{ mix('js/app.js') }}"></script>
     <div id="app">
-        <h1>legal</h1>
+        @yield('content')
+        @vite('resources/js/app.js')
     </div>
 </body>
 </html>

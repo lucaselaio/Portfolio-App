@@ -1,14 +1,9 @@
-require('./bootstrap');
+import './bootstrap';
 
-import { createApp } from "vue";
+import { createApp } from 'vue';
+import App from './components/App.vue';
 
-import App from './App.vue';
-// import axios from 'axios';
+const app = createApp();
 
-const app = createApp({});
-
-registerBaseComponents(app);
-
-app.component("app-component", App);
-// app.config.globalProperties.$axios = axios;
+app.component('app', App);
 app.mount('#app');
