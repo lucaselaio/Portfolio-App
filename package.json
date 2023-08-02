@@ -1,13 +1,9 @@
 {
     "private": true,
     "scripts": {
-        "dev": "npm run development",
-        "development": "mix",
-        "watch": "mix watch",
-        "watch-poll": "mix watch -- --watch-options-poll=1000",
-        "hot": "mix watch --hot",
-        "prod": "npm run production",
-        "production": "mix --production"
+        "dev": "vite",
+        "build": "vite build && vite build --ssr",
+        "prettier": "prettier --write ."
     },
     "devDependencies": {
         "axios": "^1.1.2",
@@ -20,6 +16,7 @@
         "@vitejs/plugin-vue": "^4.2.3",
         "bootstrap": "^5.3.1",
         "bootstrap-vue": "^2.23.1",
+        "eslint": "^8.46.0",
         "vue": "^3.3.4"
     }
 }
