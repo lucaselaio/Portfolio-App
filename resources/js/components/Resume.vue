@@ -1,15 +1,19 @@
 <template>
   <div class="w-full">
-    <div class="card">
-      <div class="card-body">
-        This is some text within a card body.
-      </div>
-    </div>
+    <TittleHeader
+      title="Lucas Azevedo"
+      subTitle="Software Engineer"
+    />
   </div>
 </template>
 <script>
+import TittleHeader from './common/TittleHeader.vue'
 export default {
-    name: 'Resume'
+    name: 'Resume',
+    components: {
+      TittleHeader,
+    }
+
 }
 </script>
 <style>
