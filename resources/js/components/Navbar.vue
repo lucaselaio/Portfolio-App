@@ -2,7 +2,7 @@
     <nav class="w-full navbar navbar-expand-lg" data-bs-theme="dark">
         <div class="container-fluid">
             <div style="color: white; margin: 5px 35px;">
-                <i class="fa-solid fa-person-chalkboard fa-xl"></i>
+                <i class="fa-solid fa-user-tie fa-xl"></i>
             </div>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
@@ -18,6 +18,9 @@
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a href="https://www.linkedin.com/in/lucas-v-azevedo/" target="_blank" class="nav-link"><i class="fa-brands fa-linkedin fa-lg"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" target="_blank" class="nav-link"><i class="fa-brands fa-square-github fa-lg"></i></a>
                     </li>
                 </ul>
             </div>

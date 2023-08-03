@@ -25,9 +25,8 @@
         font-family: 'Inter', sans-serif;
     }
     .background{
-        height:100%;
-        position:fixed;
-        background-image: linear-gradient(to bottom right, #1a1a1acd, #000939b1);
+        height:fit-content;
+        background-color: #181818;
         padding: 0;
     }
 </style>
