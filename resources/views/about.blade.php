@@ -1,5 +1,5 @@
 @extends('master')
 
 @section('content')
-    <Resume/>
+    <About/>
 @endsection

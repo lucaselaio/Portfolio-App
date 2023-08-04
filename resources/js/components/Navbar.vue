@@ -1,5 +1,5 @@
 <template>
-    <nav class="w-full navbar navbar-expand-lg" data-bs-theme="dark">
+    <nav class="w-full navbar navbar-expand-lg sticky-top" data-bs-theme="dark">
         <div class="container-fluid">
             <div style="color: white; margin: 5px 35px;">
                 <i class="fa-solid fa-user-tie fa-xl"></i>
@@ -7,7 +7,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/resume">About</a>
+                        <a class="nav-link" aria-current="page" href="/about">About</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/">Work</a>
@@ -30,7 +30,7 @@
 
 <script>
 export default {
-    name: 'Navbar',
+    name: 'Navbar'
 }
 </script>
 

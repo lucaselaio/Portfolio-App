@@ -44,6 +44,9 @@ export default {
 
 .row {
     display: flex;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: medium;
 }
 
 .col {
