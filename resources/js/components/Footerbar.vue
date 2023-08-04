@@ -10,17 +10,26 @@
             </div>
         </div>
         <div class="contactIcons">
-            <LabelTag text="lucas.elaio@gmail.com">
+            <LabelTag 
+                :with-reveal="true"
+                text="lucas.elaio@gmail.com"
+            >
                 <template #icon>
                     <i class="fa-solid fa-envelope fa-xl"></i>
                 </template>
             </LabelTag>
-            <LabelTag text="(774) 285-2358">
+            <LabelTag 
+                :with-reveal="true"
+                text="(774) 285-2358"
+            >
                 <template #icon>
                     <i class="fa-solid fa-mobile-screen fa-xl"></i>
                 </template>
             </LabelTag>
-            <LabelTag text="    linkedin.com/in/lucas-v-azevedo">
+            <LabelTag 
+                :with-reveal="true"
+                text="linkedin.com/in/lucas-v-azevedo"
+            >
                 <template #icon>
                     <i class="fa-brands fa-linkedin fa-xl"></i>
                 </template>
