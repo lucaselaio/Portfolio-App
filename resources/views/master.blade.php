@@ -10,6 +10,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Inter&family=Outfit:wght@100&display=swap');
             @import url('https://fonts.googleapis.com/css2?family=Inter&family=Outfit:wght@400&display=swap');
@@ -22,7 +23,7 @@
     <body>
         <div id="app">
             <Navbar></Navbar>
-            <div class="container-fluid">
+            <div class="container-fluid" style="min-height: 40em;">
                 @yield('content')
             </div>
             <Footerbar></Footerbar>
