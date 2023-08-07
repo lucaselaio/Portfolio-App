@@ -1,13 +1,22 @@
 <template>
-    <div @click="copyToClipboard" class="label text-center">
-        <slot name="icon">
-        </slot>
-        <span class="revealText">
-            &nbsp {{ text }}
-        </span>
-        <span v-if="copied" class="revealTextTop">
-            {{ copied }}
-        </span>
+    <div>
+        <div v-if="withReveal" @click="copyToClipboard" class="label text-center">
+            <slot name="icon">
+            </slot>
+            <span class="revealText">
+                &nbsp {{ text }}
+            </span>
+            <span v-if="copied" class="revealTextTop">
+                {{ copied }}
+            </span>
+        </div>
+        <div v-else class="label text-center">
+            <slot name="icon">
+            </slot>
+            <span >
+                &nbsp {{ text }}
+            </span>
+        </div>
     </div>
 </template>
 <script>
@@ -25,6 +34,13 @@ export default {
             default: () => {
                 return '';
             }
+        },
+        withReveal: {
+            type: Boolean,
+            required: false,
+            default: () => {
+                return false;
+            }
         }
     },
     methods: {
@@ -37,7 +53,7 @@ export default {
 
             try {
                 const successful = document.execCommand('copy');
-                if(successful) {
+                if (successful) {
                     this.copied = "Copied!";
                     setTimeout(() => {
                         this.copied = "";
@@ -50,9 +66,9 @@ export default {
             document.body.removeChild(tempInput);
         }
     },
-    watch:{
-        copied(newVal){
-            if(newVal){
+    watch: {
+        copied(newVal) {
+            if (newVal) {
                 this.classShow = 'show';
             }
         }
@@ -69,6 +85,7 @@ export default {
     align-items: center;
     position: relative;
     cursor: pointer;
+    border: 3px solid #808080;
 }
 
 .revealText {
