@@ -1,9 +1,9 @@
 <template>
-    <span class="iconPill" >
-        <slot name="icon">
+    <div class="pill" >
+        <slot>
 
         </slot>
-    </span>
+    </div>
 </template>
 <script>
 
@@ -11,11 +11,20 @@ export default {
     name: 'LanguageIconPill'
 }
 </script>
-<style lang="scss">
-.iconPill{
-    background-color: $mediumGray;
-    padding: 0em 0.5em;
-    border-radius: 15px;
-    border: 1px solid #272727;
+<style lang="scss" scooped>
+.pill{
+    display: flex;
+    background-color: $transparent;
+    padding-top: 0.4em;
+    border-radius: $regularRadius;
+    width: 4em;
+    height: 4.8em;
+    flex-direction: column;
+    align-items: center;
+}
+.pill:hover{
+    background-color: $darkGray;
+    border-bottom: 1px solid $onyx;
+    border-left: 1px solid $onyx;
 }
 </style>

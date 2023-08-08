@@ -77,15 +77,15 @@ export default {
 </script>
 <style lang="scss">
 .label {
-    background-color: black;
+    // background-color: black;
     color: $white;
-    padding: 1.5em 1em;
+    padding: 1em 0.5em;
     border-radius: 15px;
     display: flex;
     align-items: center;
     position: relative;
     cursor: pointer;
-    border: 3px solid #808080;
+    // border: 2px solid #808080;   
 }
 
 .revealText {

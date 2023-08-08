@@ -5,7 +5,7 @@
             <div class="row text-center">
                 <div class="col">
                     <p style="font-weight: 100;">Get <span style="font-weight: 700;">in Touch. </span><i
-                            class="fa-regular fa-comments fa-bounce"></i> {{ '\n' }}So we can talk more about...</p>
+                            class="fa-regular fa-comments fa-beat-fade"></i> {{ '\n' }}So we can talk more about...</p>
                 </div>
             </div>
         </div>
@@ -71,8 +71,7 @@ p {
 }
 
 .footer {
-    font-family: 'Inter', sans-serif;
-    font-family: 'Outfit', sans-serif;
+    font-family: $outfit;
     color: $white;
     bottom: 0;
     left: 0;

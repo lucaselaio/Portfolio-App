@@ -4,5 +4,21 @@ $mediumGray: rgb(128, 128, 128, 0.5);
 $darkGray: #808080;
 $white: #ffffff;
 $onyx: #181818;
+$lightBlue: rgb(63, 100, 234, 0.43);
+$glass: rgba(255, 255, 255, 0.459);
+$transparent: rgba(255, 255, 255, 0);
 
-$regularRadius: 20px;
+
+//standard
+$regularRadius: 10px;
+
+//fonts
+$montserrat: 'Montserrat', sans-serif;
+$inter: 'Inter', sans-serif;
+$outfit: 'Outfit', sans-serif;
+$robotoCondensed: 'Roboto Condensed', sans-serif;
+
+//helper classes
+.subTitle{
+    color: $mediumGray;
+}

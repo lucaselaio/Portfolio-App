@@ -43,10 +43,6 @@ export default {
     color: $white;
 }
 
-.subTitle {
-    color: $mediumGray;
-}
-
 hr {
     margin: 0px;
     color: $mediumGray;
