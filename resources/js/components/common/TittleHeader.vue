@@ -34,17 +34,13 @@ export default {
 .header {
     height: fit-content;
     background-color: $onyx;
-    padding: 9em 5% 50px 5%;
+    padding: 6em 5em 2em 5em;
 }
 
 .title {
     font-size: 80px;
     font-weight: bold;
     color: $white;
-}
-
-.subTitle {
-    color: $mediumGray;
 }
 
 hr {

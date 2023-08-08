@@ -1,7 +1,7 @@
 <template>
     <div class="pageContent">
-
-        <div class="row" v-if="portrait == ''">
+        {{ portrait }}
+        <div class="row" v-if="! portrait">
             <div class="col">
                 <slot name="body">
 
@@ -44,7 +44,7 @@ export default {
 
 .row {
     display: flex;
-    font-family: 'Montserrat', sans-serif;
+    font-family: $montserrat;
     font-weight: 400;
     font-size: medium;
 }

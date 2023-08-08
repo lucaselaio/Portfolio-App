@@ -9,8 +9,8 @@
   </div>
 </template>
 <script>
-import TittleHeader from './common/TittleHeader.vue'
-import PageContent from './common/PageContent.vue'
+import TittleHeader from '../components/common/TittleHeader.vue'
+import PageContent from '../components/common/PageContent.vue'
 export default {
   name: 'Resume',
   data() {
