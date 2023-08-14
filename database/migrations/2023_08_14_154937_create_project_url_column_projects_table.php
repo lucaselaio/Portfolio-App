@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('projects', function (Blueprint $table){
+        Schema::table('projects', function (Blueprint $table) {
             $table->string('project_url')->nullable();
         });
     }
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('projects', function (Blueprint $table){
-            $table->dropColumn('project_url');
+        Schema::table('project_url_column_projects', function (Blueprint $table) {
+            $table->drop('project_url');
         });
     }
 };

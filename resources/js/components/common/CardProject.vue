@@ -3,7 +3,7 @@
         <div class="card-body">
             <div class="cardHeader">
                 <div class="title mb-1">
-                    <img class="rounded" style="float: right;" width="70" height="70"
+                    <img @click="openOnNewTab(project.project_url)" class="rounded" style="float: right; margin: 0.3em; cursor: pointer;" width="90" height="90"
                         :src="`images/${transformImageName(project.project_name)}.jpg`" />
                     {{ project.project_name }}
                 </div>
@@ -79,6 +79,9 @@ export default {
         },
         extractFromJson(json, field){
             return JSON.parse(json)[field];
+        },
+        openOnNewTab(url){
+            window.open(url, '_blank');
         }
     }
 }
