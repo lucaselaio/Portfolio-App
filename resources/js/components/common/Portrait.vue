@@ -16,7 +16,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .portrait {
-    opacity: 0.75;
+    opacity: 0.95;
     max-width: 24em;
     border-radius: 10px;
 }
