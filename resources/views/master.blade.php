@@ -35,8 +35,13 @@
     </body>
 </html>
 <style>
-    body{
-        font-family: 'Inter', sans-serif;
-        background-color: #ffffff;
-    }
+body{
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+
+    background-size: 100% 100%;
+    background-position: 0px 0px;
+    background-image: radial-gradient(75% 75% at 50% 50%, #FAF0E5FF 0%, #D7D7DFFF 100%);
+}
 </style>
