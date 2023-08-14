@@ -1,6 +1,5 @@
 <template>
     <div class="pageContent">
-        {{ portrait }}
         <div class="row" v-if="! portrait">
             <div class="col">
                 <slot name="body">
@@ -39,7 +38,7 @@ export default {
 <style lang="scss" scoped>
 .pageContent {
     margin: 3em 15% 0px;
-    color: $white;
+    color: $darkGray;
 }
 
 .row {

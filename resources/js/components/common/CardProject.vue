@@ -1,40 +1,29 @@
 <template>
     <div class="card cardBackground">
         <div class="card-body">
-            <div class="cardHeader mr-4">
-                <div class="title mb-1">{{ title }}</div>
-                <div class="dateRange"> {{ dateRange }}</div>
+            <div class="cardHeader">
+                <div class="title mb-1">
+                    <img @click="openOnNewTab(project.project_url)" class="rounded" style="float: right; margin: 0.3em; cursor: pointer;" width="90" height="90"
+                        :src="`images/${transformImageName(project.project_name)}.jpg`" />
+                    {{ project.project_name }}
+                </div>
+                <div class="dateRange"> {{ getDateRangeString(project.date_from, project.date_to) }}</div>
+
             </div>
             <hr>
             <div class="description">
-                <div  class="d-flex align-items-center">
-                    Inseego Corp. (Nasdaq: INSG) is an industry pioneer in smart device-to-cloud solutions that extend the 5G network edge, enabling broader 5G coverage, multi-gigabit data speeds, low latency and strong security to deliver highly reliable internet access. Our innovative mobile broadband and fixed wireless access (FWA) solutions incorporate the most advanced technologies (including 5G, 4G LTE, Wi-Fi 6 and others) into a wide range of products that provide robust connectivity indoors, outdoors and in the harshest industrial environments. Designed and developed in the USA, Inseego products and SaaS solutions build on the company’s patented technologies to provide the highest quality 4G and 5G connectivity for service providers, enterprises, and government entities worldwide.
+                <div class="d-flex align-items-center">
+                    {{ extractFromJson(project.about, 'about') }}
                 </div>
             </div>
             <hr>
-            <div class="techList">
-                <div  class="d-flex align-items-center">
+            <div class="techList d-flex flex-wrap">
+                <div class="d-flex align-items-center">
                     <h6>Thecnologies used:</h6>
                 </div>
-                <LanguageIconPill>
-                    <img class="mb-2" width="40" height="40" :src="iconsUrl.php" />
-                    <p style="font-size: 12px;">PHP</p>
-                </LanguageIconPill>
-                <LanguageIconPill>
-                    <img class="mb-2" width="40" height="40" :src="iconsUrl.javascript" />
-                    <p style="font-size: 12px;">Javascript</p>
-                </LanguageIconPill>
-                <LanguageIconPill>
-                    <img class="mb-2" width="40" height="40" :src="iconsUrl.vue" />
-                    <p style="font-size: 12px;">Vue.js</p>
-                </LanguageIconPill>
-                <LanguageIconPill>
-                    <img class="mb-2" width="40" height="40" :src="iconsUrl.jquery" />
-                    <p style="font-size: 12px;">JQuery</p>
-                </LanguageIconPill>
-                <LanguageIconPill>
-                    <img class="mb-2" width="40" height="40" :src="iconsUrl.git" />
-                    <p style="font-size: 12px;">Git</p>
+                <LanguageIconPill v-for="(techDescription, techName) in project.technologies" :key="techName">
+                    <img class="mb-2" width="40" height="40" :src="iconsUrl[techName]"/>
+                    <p style="font-size: 12px;">{{ techDescription }}</p>
                 </LanguageIconPill>
             </div>
         </div>
@@ -47,49 +36,84 @@ import LanguageIconPill from './LanguageIconPill.vue';
 
 export default {
     name: 'CardProject',
+    components: {
+        LanguageIconPill,
+        LabelTag
+    },
     data() {
         return {
             iconsUrl: devIcons,
             title: 'Inseego',
-            dateRange: 'From Nov - 2022'    
+            dateRange: 'From Nov - 2022',
+            logo: 'inseego'
         }
     },
     props: {
-        technologyList: {
+        project: {
             type: Object,
-            required: false,
-            default: () => {
-                return {};
-            }
+            required: true
         }
     },
-    components: {
-        LanguageIconPill,
-        LabelTag
+    mounted() {
+        console.log(this.project)
+    },
+    methods: {
+        transformImageName(imageName) {
+            return imageName
+                .toLowerCase()
+                .replace(/ /g, '_')
+                .replace(/logo.*/, '')
+                + '_logo';
+        },
+        formatDate(date) {
+            if (!date) {
+                return 'Current';
+            }
+            const options = { year: 'numeric', month: 'short' };
+            return new Date(date).toLocaleDateString('en-US', options);
+        },
+        getDateRangeString(startDate, endDate) {
+            const fromMonthYear = this.formatDate(startDate);
+            const toMonthYear = this.formatDate(endDate);
+            return `From ${fromMonthYear} | ${toMonthYear || 'Current'}`;
+        },
+        extractFromJson(json, field){
+            return JSON.parse(json)[field];
+        },
+        openOnNewTab(url){
+            window.open(url, '_blank');
+        }
     }
 }
 </script>
 <style lang="scss" scoped>
-.card{
-    font-family: $outfit;
-    width: 90%;
+.card {
+    font-family: $titilliumWeb;
     margin-bottom: 2em;
 }
-.dateRange{
-    color: $white;
+
+.cardHeader {
+    margin-right: 0em;
 }
-.title{
+
+.dateRange {
+    color: $darkGray;
+}
+
+.title {
     font-size: 40px;
     font-weight: 700;
 }
+
 .cardBackground {
-    color: $white;
-    background-color: #ffffff30;
+    color: $darkGray;
+    background-color: rgb(255, 255, 255, 0.07);
+    box-shadow: 0px 7px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    border-radius: 20px !important;
 }
-.techList{
-    display: flex;
-}
-.techList div{
+
+.techList div {
     margin-right: 1em;
 }
 </style>

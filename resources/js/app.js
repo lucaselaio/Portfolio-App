@@ -4,6 +4,8 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import { createI18n } from 'vue-i18n';
 import aboutEn from '../lang/en/about.js';
 
+import { createStore } from 'vuex';
+
 const i18n = new createI18n({
     locale: 'en',
     messages: {
@@ -35,6 +37,7 @@ const app = createApp();
 
 app.use(i18n);
 
+//components
 app.component('navbar', Navbar);
 app.component('about', About);
 app.component('tittle-header', TittleHeader);
@@ -45,5 +48,16 @@ app.component('label-tag', LabelTag);
 app.component('work-history', WorkHistory);
 app.component('card-project', CardProject);
 app.component('language-icon-pill', LanguageIconPill);
+
+//modules
+import projects from './store/projects.js';
+
+const store = createStore({
+    modules: {
+        projects,
+    }
+});
+
+app.use(store);
 
 app.mount('#app');

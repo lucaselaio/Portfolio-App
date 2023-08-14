@@ -40,7 +40,7 @@ export default {
 .title {
     font-size: 80px;
     font-weight: bold;
-    color: $white;
+    color: $darkGray;
 }
 
 hr {

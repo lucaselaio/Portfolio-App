@@ -3,7 +3,8 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build && vite build --ssr",
-        "watch": "vite build --watch"
+        "watch": "vite build --watch",
+        "docker-restart": "docker-compose down && docker-compose up -d"
     },
     "devDependencies": {
         "axios": "^1.1.2",
@@ -20,6 +21,7 @@
         "bootstrap": "^5.3.1",
         "eslint": "^8.46.0",
         "vue": "^3.3.4",
-        "vue-i18n": "^9.2.2"
+        "vue-i18n": "^9.2.2",
+        "vuex": "^4.1.0"
     }
 }
