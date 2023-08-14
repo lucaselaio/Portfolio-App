@@ -25,7 +25,8 @@ class Project extends Model
         'date_from',
         'date_to',
         'about',
-        'technologies'
+        'technologies',
+        'project_url'
     ];
 
     protected $dates = [

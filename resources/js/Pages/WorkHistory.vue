@@ -2,10 +2,12 @@
     <div>
         <PageContent>
             <template #body>
-                <CardProject/>
-                <CardProject style="float:right;"/>
-                <CardProject/>
-                <CardProject style="float:right;"/>
+                <CardProject 
+                    v-for="(project, key) in projects" 
+                    :key="key"  
+                    
+                    :project="project"
+                />
             </template>
         </PageContent>
     </div>
@@ -13,12 +15,22 @@
 <script>
 import CardProject from '../components/common/CardProject.vue';
 import PageContent from '../components/common/PageContent.vue';
+import { mapActions, mapGetters } from 'vuex';
 export default {
     name: 'WorkHistory',
     components: { 
         CardProject, 
         PageContent 
-    }
+    },
+    computed: {
+        ...mapGetters('projects', ['projects']),
+    },
+    methods:{
+        ...mapActions('projects', ['fetchProjects']),
+    },
+    created(){
+        this.fetchProjects();
+    },
 }
 </script>
 <style lang="scss">

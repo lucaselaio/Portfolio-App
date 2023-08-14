@@ -9,11 +9,11 @@
     </div>
     <div class="mb-3">
         <label for="date_from" class="form-label">From</label>
-        <input required name="date_from" type="date" class="form-control" id="date_from" placeholder="From">
+        <input required name="date_from" type="month" class="form-control" id="date_from" placeholder="From">
     </div>
     <div class="mb-3">
         <label for="date_to" class="form-label">To</label>
-        <input name="date_to" type="date" class="form-control" id="date_to" placeholder="To">
+        <input name="date_to" type="month" class="form-control" id="date_to" placeholder="To">
     </div>
     <div class="mb-3">
         <label for="about" class="form-label">About</label>

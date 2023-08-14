@@ -1,6 +1,6 @@
 <template>
     <div class="portrait">
-        <img :src="imagePath" class="rounded img-fluid mx-auto d-block">
+        <img height="90" :src="imagePath" class="rounded img-fluid mx-auto d-block">
     </div>
 </template>
 <script>
@@ -16,9 +16,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .portrait {
-    max-width: 20em;
+    opacity: 0.75;
+    max-width: 24em;
     border-radius: 10px;
-    border: solid 3px $mediumGray;
-    
 }
 </style>

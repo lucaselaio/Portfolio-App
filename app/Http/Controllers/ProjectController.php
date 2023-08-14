@@ -3,15 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Interfaces\ProjectsServiceInterface;
 
 class ProjectController extends Controller
 {
+    protected $projectsService;
+
+    public function __construct(ProjectsServiceInterface $projectsService)
+    {
+        $this->projectsService = $projectsService;
+    }
+
     public function show($id)
     {
         // $project = Project::find($id);
         // return view('projects.show', compact('project'));
+    }
+
+    public function list()
+    {
+        return $this->projectsService->fetchProjects();
     }
 
     public function create()
@@ -28,15 +40,12 @@ class ProjectController extends Controller
             'technologies' => 'required'
         ]);
 
-        Project::create([
-            'project_name' => (string) $request->project_name,
-            'date_from' => $request->date_from ? (string)Carbon::parse($request->date_from) : null,
-            'date_to' => $request->date_to ? (string)Carbon::parse($request->date_to) : null,
-            'about' => $request->about ? json_encode(['about' => $request->about]) : null,
-            'technologies' => $request->technologies ? json_encode($request->technologies) : []
-        ]);
-        return redirect()->route('projects.create')->with('success', 'Projeto criado com sucesso.');
-        
+        try {
+            Project::create($this->projectsService->preparePostData($request));
+            return redirect()->route('projects.create')->with('success', 'Projeto criado com sucesso.');
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     public function edit($id)

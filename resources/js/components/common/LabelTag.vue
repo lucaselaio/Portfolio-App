@@ -78,7 +78,7 @@ export default {
 <style lang="scss">
 .label {
     // background-color: black;
-    color: $white;
+    color: $darkGray;
     padding: 1em 0.5em;
     border-radius: 15px;
     display: flex;

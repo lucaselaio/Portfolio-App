@@ -72,7 +72,7 @@ p {
 
 .footer {
     font-family: $outfit;
-    color: $white;
+    color: $darkGray;
     bottom: 0;
     left: 0;
     right: 0;

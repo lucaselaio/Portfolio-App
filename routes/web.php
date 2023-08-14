@@ -27,7 +27,7 @@ Route::get('/work', function () {
 });
 
 //Project routes
-// Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+Route::get('/projects', [ProjectController::class, 'list'])->name('projects.list');
 Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
 Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
 // Route::get('/projects/{id}', [ProjectController::class, 'show'])->name('projects.show');

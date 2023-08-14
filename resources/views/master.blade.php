@@ -18,6 +18,8 @@
             @import url('https://fonts.googleapis.com/css2?family=Inter&family=Montserrat&family=Outfit:wght@100;700&display=swap');
             @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
             @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap');
         </style>
         <title>Portfolio</title>
     </head>
@@ -35,6 +37,6 @@
 <style>
     body{
         font-family: 'Inter', sans-serif;
-        background-color: #181818;
+        background-color: #ffffff;
     }
 </style>
