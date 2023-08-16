@@ -96,19 +96,15 @@ export default {
     margin-right: 0em;
 }
 
-.dateRange {
-    color: $darkGray;
-}
-
 .title {
     font-size: 40px;
     font-weight: 700;
 }
 
 .cardBackground {
-    color: $darkGray;
-    background-color: rgb(255, 255, 255, 0.07);
-    box-shadow: 0px 7px 6px rgba(0, 0, 0, 0.1);
+    // color: $darkGray;
+    // background-color: rgb(255, 255, 255, 0.07);
+    // box-shadow: 0px 7px 6px rgba(0, 0, 0, 0.1);
     margin: 20px;
     border-radius: 20px !important;
 }

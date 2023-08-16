@@ -17,8 +17,10 @@ const i18n = new createI18n({
 import { createApp } from 'vue';
 
 //components
+import MainComponent from './components/MainComponent.vue';
 import Navbar from './components/Navbar.vue';
 import Footerbar from './components/Footerbar.vue';
+import ThemeSwitch from './components/ThemeSwitch.vue';
 
 //common components
 import TittleHeader from './components/common/TittleHeader.vue';
@@ -38,6 +40,7 @@ const app = createApp();
 app.use(i18n);
 
 //components
+app.component('main-component', MainComponent);
 app.component('navbar', Navbar);
 app.component('about', About);
 app.component('tittle-header', TittleHeader);
@@ -48,15 +51,24 @@ app.component('label-tag', LabelTag);
 app.component('work-history', WorkHistory);
 app.component('card-project', CardProject);
 app.component('language-icon-pill', LanguageIconPill);
+app.component('theme-switch', ThemeSwitch);
 
 //modules
+import theme from './store/theme.js';
 import projects from './store/projects.js';
+
 
 const store = createStore({
     modules: {
-        projects,
+        theme,
+        projects
     }
 });
+
+// Carregar o tema armazenado no Local Storage
+// const selectedTheme = localStorage.getItem('selectedTheme');
+
+store.dispatch('theme/setTheme');
 
 app.use(store);
 
