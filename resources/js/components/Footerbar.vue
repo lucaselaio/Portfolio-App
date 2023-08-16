@@ -49,9 +49,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-hr {
-    color: $mediumGray;
-}
 
 p {
     white-space: pre;
@@ -72,11 +69,5 @@ p {
 
 .footer {
     font-family: $outfit;
-    color: $darkGray;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 100px;
-    padding: 10px;
 }
 </style>

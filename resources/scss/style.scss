@@ -3,24 +3,82 @@
 $mediumGray: rgb(128, 128, 128, 0.5);
 $darkGray: #6b6b6b;
 $white: #ffffff;
-$onyx: #181818;
+$onyx: #181818cd;
 $lightBlue: rgb(63, 100, 234, 0.43);
 $glass: rgba(255, 255, 255, 0.65);
 $transparent: rgba(255, 255, 255, 0);
-
 
 //standard
 $regularRadius: 10px;
 
 //fonts
-$montserrat: 'Montserrat', sans-serif;
-$inter: 'Inter', sans-serif;
-$outfit: 'Outfit', sans-serif;
-$robotoCondensed: 'Roboto Condensed', sans-serif;
-$ubuntu: 'Ubuntu', sans-serif;
-$titilliumWeb: 'Titillium Web', sans-serif;
+$montserrat: "Montserrat", sans-serif;
+$inter: "Inter", sans-serif;
+$outfit: "Outfit", sans-serif;
+$robotoCondensed: "Roboto Condensed", sans-serif;
+$ubuntu: "Ubuntu", sans-serif;
+$titilliumWeb: "Titillium Web", sans-serif;
 
 //helper classes
-.subTitle{
-    color: $mediumGray;
+
+.lightTheme {
+    color: $darkGray;
+    font-family: "Inter", sans-serif;
+
+    background-size: 100% 100%;
+    background-position: 0px 0px;
+    background-image: radial-gradient(75% 75% at 50% 50%, #faf0e5ff 0%, #d7d7dfff 100%);
+    .subTitle {
+        color: $mediumGray;
+    }
+    nav {
+        background-color: $glass;
+    }
+    .cardBackground {
+        color: $darkGray;
+        background-color: rgb(255, 255, 255, 0.07);
+        box-shadow: 0px 7px 6px rgba(0, 0, 0, 0.1);
+    }
+    .revealTextTop {
+        background-color: $mediumGray;
+    }
+    .pill {
+        background-color: $transparent;
+    }
+    .pill:hover {
+        background-color: $glass;
+        border-bottom: 1px solid $mediumGray;
+        border-left: 1px solid $mediumGray;
+    }
+}
+
+.darkTheme {
+    color: $white;
+    font-family: "Inter", sans-serif;
+
+    background-size: 100% 100%;
+    background-position: 0px 0px;
+    background-image: radial-gradient(75% 75% at 50% 50%, #575c96ff 0%, #090909ff 100%);
+    nav {
+        background-color: $onyx;
+    }
+    nav ul li a {
+        color: $white !important;
+    }
+    .cardBackground {
+        color: $white;
+        background-color: rgba(255, 255, 255, 0.07);
+        box-shadow: 0px 7px 6px rgba(255, 255, 255, 0.2);
+    }
+    .revealTextTop {
+        background-color: $transparent;
+    }
+    .pill {
+        background-color: $transparent;
+    }
+    .pill:hover {
+        background-color: $glass;
+        border-bottom: 1px solid $mediumGray;
+        border-left: 1px solid $mediumGray;
+    }
 }

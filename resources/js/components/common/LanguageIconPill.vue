@@ -14,7 +14,7 @@ export default {
 <style lang="scss" scooped>
 .pill{
     display: flex;
-    background-color: $transparent;
+    // background-color: $transparent;
     padding-top: 0.4em;
     border-radius: $regularRadius;
     width: 4em;
@@ -22,9 +22,9 @@ export default {
     flex-direction: column;
     align-items: center;
 }
-.pill:hover{
-    background-color: $glass;
-    border-bottom: 1px solid $mediumGray;
-    border-left: 1px solid $mediumGray;
-}
+// .pill:hover{
+//     background-color: $glass;
+//     border-bottom: 1px solid $mediumGray;
+//     border-left: 1px solid $mediumGray;
+// }
 </style>
