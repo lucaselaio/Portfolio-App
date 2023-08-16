@@ -37,8 +37,11 @@ export default {
 }
 
 .title {
+    font-family: $montserrat;
     font-size: 80px;
     font-weight: bold;
+    color: #5f5f5f;
+    text-shadow: -5px 5px 7px rgba(0, 0, 0, 0.2);
 }
 
 hr {

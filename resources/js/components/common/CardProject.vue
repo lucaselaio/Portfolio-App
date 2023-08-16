@@ -3,7 +3,8 @@
         <div class="card-body">
             <div class="cardHeader">
                 <div class="title mb-1">
-                    <img @click="openOnNewTab(project.project_url)" class="rounded" style="float: right; margin: 0.3em; cursor: pointer;" width="90" height="90"
+                    <img @click="openOnNewTab(project.project_url)" class="rounded"
+                        style="float: right; margin: 0.3em; cursor: pointer;" width="90" height="90"
                         :src="`images/${transformImageName(project.project_name)}.jpg`" />
                     {{ project.project_name }}
                 </div>
@@ -22,9 +23,12 @@
                     <h6>Thecnologies used:</h6>
                 </div>
                 <LanguageIconPill v-for="(techDescription, techName) in project.technologies" :key="techName">
-                    <img class="mb-2" width="40" height="40" :src="iconsUrl[techName]"/>
+                    <img class="mb-2" width="40" height="40" :src="iconsUrl[techName]" />
                     <p style="font-size: 12px;">{{ techDescription }}</p>
                 </LanguageIconPill>
+            </div>
+            <div class="d-flex justify-content-end">
+                <a :href="`/project_detailed/${project.project_id}`">See work experience detailed <i class="fa-solid fa-circle-right"></i></a>
             </div>
         </div>
     </div>
@@ -54,9 +58,6 @@ export default {
             required: true
         }
     },
-    mounted() {
-        console.log(this.project)
-    },
     methods: {
         transformImageName(imageName) {
             return imageName
@@ -67,26 +68,52 @@ export default {
         },
         formatDate(date) {
             if (!date) {
-                return 'Current';
+                return null;
             }
             const options = { year: 'numeric', month: 'short' };
             return new Date(date).toLocaleDateString('en-US', options);
         },
+
+        calculateMonthDifference(startDate, endDate) {
+            const start = new Date(startDate);
+            const end = endDate ? new Date(endDate) : new Date();
+            return (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+        },
+
         getDateRangeString(startDate, endDate) {
             const fromMonthYear = this.formatDate(startDate);
+            const diffInMonths = this.calculateMonthDifference(startDate, endDate);
+
+            if (!endDate) {
+                const timeString = `( ${diffInMonths} months )`;
+                return `From ${fromMonthYear} | Current - ${timeString}`;
+            }
+
             const toMonthYear = this.formatDate(endDate);
-            return `From ${fromMonthYear} | ${toMonthYear || 'Current'}`;
+
+            if (diffInMonths >= 12) {
+                const numberOfYears = Math.floor(diffInMonths / 12);
+                const remainingMonths = diffInMonths % 12;
+                const yearsString = numberOfYears > 1 ? `${numberOfYears} years` : `${numberOfYears} year`;
+                const monthsString = remainingMonths > 1 ? `${remainingMonths} months` : `${remainingMonths} month`;
+                const timeString = `( ${yearsString} and ${monthsString} )`;
+                return `From ${fromMonthYear} | ${toMonthYear} - ${timeString}`;
+            }
+
+            const timeString = `( ${diffInMonths} months )`;
+            return `From ${fromMonthYear} | ${toMonthYear} - ${timeString}`;
         },
-        extractFromJson(json, field){
+        extractFromJson(json, field) {
             return JSON.parse(json)[field];
         },
-        openOnNewTab(url){
+        openOnNewTab(url) {
             window.open(url, '_blank');
         }
     }
 }
 </script>
 <style lang="scss" scoped>
+
 .card {
     font-family: $titilliumWeb;
     margin-bottom: 2em;
@@ -102,9 +129,6 @@ export default {
 }
 
 .cardBackground {
-    // color: $darkGray;
-    // background-color: rgb(255, 255, 255, 0.07);
-    // box-shadow: 0px 7px 6px rgba(0, 0, 0, 0.1);
     margin: 20px;
     border-radius: 20px !important;
 }

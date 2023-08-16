@@ -2,9 +2,7 @@
   <div class="w-full">
     <TittleHeader title="Lucas Azevedo" subTitle="Software Engineer" :centered="true" />
     <PageContent portrait="/images/profile.png">
-      <template #body>
-        <p style="text-align: justify;" v-html="$t('presentationText')"></p>
-      </template>
+      <p style="text-align: justify;" v-html="$t('presentationText')"></p>
     </PageContent>
   </div>
 </template>

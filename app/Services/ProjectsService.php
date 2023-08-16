@@ -3,14 +3,14 @@
 namespace App\Services;
 
 use App\Interfaces\ProjectsServiceInterface;
-use App\Models\Project; // Certifique-se de importar o modelo correto
+use App\Models\Project;
 use Carbon\Carbon;
 
 class ProjectsService implements ProjectsServiceInterface
 {
     public function fetchProjects()
     {
-        return Project::all(); // Exemplo de lógica de busca de projetos
+        return Project::all();
     }
 
     public function preparePostData($request)

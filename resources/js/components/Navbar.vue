@@ -9,6 +9,12 @@
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/work">Work History</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/projects/create">Cadastrar Projeto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/project_detailed/create">Cadastrar detalhes</a>
+                    </li>
                 </ul>
             </div>
             <div class="d-flex" role="search">

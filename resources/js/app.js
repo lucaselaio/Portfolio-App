@@ -33,6 +33,8 @@ import LanguageIconPill from './components/common/LanguageIconPill.vue';
 //pages
 import WorkHistory from './Pages/WorkHistory.vue';
 import About from './Pages/About.vue';
+import ProjectDetailsCreate from './Pages/ProjectDetails/ProjectDetailsCreate.vue';
+import ProjectDetailsShow from './Pages/ProjectDetails/ProjectDetailsShow.vue';
 
 
 const app = createApp();
@@ -52,6 +54,8 @@ app.component('work-history', WorkHistory);
 app.component('card-project', CardProject);
 app.component('language-icon-pill', LanguageIconPill);
 app.component('theme-switch', ThemeSwitch);
+app.component('project-details-create', ProjectDetailsCreate);
+app.component('project-details-show', ProjectDetailsShow);
 
 //modules
 import theme from './store/theme.js';

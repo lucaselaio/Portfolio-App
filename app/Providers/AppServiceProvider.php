@@ -6,9 +6,11 @@ use Illuminate\Support\ServiceProvider;
 
 //Service
 use App\Services\ProjectsService;
+use App\Services\ProjectDetailedService;
 
 //Interface
 use App\Interfaces\ProjectsServiceInterface;
+use App\Interfaces\ProjectDetailedServiceInterface;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(ProjectsServiceInterface::class, ProjectsService::class);
+        $this->app->bind(ProjectDetailedServiceInterface::class, ProjectDetailedService::class);
     }
 
     /**

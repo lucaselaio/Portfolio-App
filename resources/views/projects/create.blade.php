@@ -1,7 +1,7 @@
 @extends('master')
 
 @section('content')
-<form style="background-color:gray;" method="POST" action="{{ route('projects.store') }}" name="project_form">
+<form method="POST" action="{{ route('projects.store') }}" name="project_form">
     @csrf
     <div class="mb-3">
         <label for="project_name" class="form-label">Project name</label>
