@@ -1,5 +1,6 @@
 import './bootstrap';
 import '@fortawesome/fontawesome-free/css/all.css';
+import 'vue3-toastify/dist/index.css';
 
 import { createI18n } from 'vue-i18n';
 import aboutEn from '../lang/en/about.js';
@@ -37,6 +38,9 @@ import ProjectDetailsCreate from './Pages/ProjectDetails/ProjectDetailsCreate.vu
 import ProjectDetailsShow from './Pages/ProjectDetails/ProjectDetailsShow.vue';
 
 
+//error code pages
+import NotFound from './Pages/NotFound.vue';
+
 const app = createApp();
 
 app.use(i18n);
@@ -56,6 +60,7 @@ app.component('language-icon-pill', LanguageIconPill);
 app.component('theme-switch', ThemeSwitch);
 app.component('project-details-create', ProjectDetailsCreate);
 app.component('project-details-show', ProjectDetailsShow);
+app.component('not-found', NotFound);
 
 //modules
 import theme from './store/theme.js';
@@ -68,9 +73,6 @@ const store = createStore({
         projects
     }
 });
-
-// Carregar o tema armazenado no Local Storage
-// const selectedTheme = localStorage.getItem('selectedTheme');
 
 store.dispatch('theme/setTheme');
 

@@ -1,6 +1,7 @@
 <template>
     <div>
         <PageContent>
+            <a class="nav-link" aria-current="page" href="/project_detailed/create">Cadastrar detalhes (Remover esse link depois)</a>
             <CardProject v-for="(project, key) in projects" :key="key" :project="project" />
         </PageContent>
     </div>

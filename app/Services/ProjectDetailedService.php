@@ -12,6 +12,16 @@ class ProjectDetailedService implements ProjectDetailedServiceInterface
         return ProjectDetailed::all();
     }
 
+    public function getProjectDetailsById($id)
+    {
+        return ProjectDetailed::find($id);
+    }
+
+    public function getProjectDetailsByProjectId($id)
+    {
+        return ProjectDetailed::where('project_id', $id)->first();
+    }
+
     public function preparePostData($request)
     {
         return [

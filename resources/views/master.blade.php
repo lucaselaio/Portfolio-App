@@ -12,6 +12,8 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+        {{-- <script src="../../node_modules/tinymce/tinymce.min.js" referrerpolicy="origin"></script> --}}
+        <script src="https://cdn.tiny.cloud/1/zdok0vt8ar6pu5ozg2pl2fzc7z8fxgxoqe6hx7qsnlbvn98r/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Inter&family=Outfit:wght@100&display=swap');
             @import url('https://fonts.googleapis.com/css2?family=Inter&family=Outfit:wght@400&display=swap');
@@ -20,17 +22,35 @@
             @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
             @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap');
             @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
             @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap');
         </style>
-        <title>Lucas Azevedo . Portfolio</title>
+        <script>
+            tinymce.init({
+            selector: 'textarea.richText',
+            plugins: 'tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+            mergetags_list: [
+                { value: 'First.Name', title: 'First Name' },
+                { value: 'Email', title: 'Email' },
+            ],
+            setup: function(editor) {
+                editor.on('change', function () {
+                    editor.save();
+                    editor.getElement().dispatchEvent(new Event('input'));
+                });
+            }
+            });
+        </script>
+        <title>Lucas Azevedo | Portfolio</title>
     </head>
-    <body>
+    <body >
         <div id="app">
-            
             <main-component>
                 @yield('content')
             </main-component>
-            
         </div>
         @vite('resources/js/app.js')
     </body>

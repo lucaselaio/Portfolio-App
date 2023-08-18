@@ -9,10 +9,10 @@
             </select>
 
             <label for="role_title" class="form-label">Role Title</label>
-            <input type="text" class="form-control" id="role_title" v-model="role_title">
+            <input required type="text" class="form-control" id="role_title" v-model="role_title">
 
             <label for="experience_description" class="form-label">Experience description</label>
-            <textarea style="height: 210px;" class="form-control" id="experience_description"
+            <textarea style="height: 210px;" class="form-control richText" id="experience_description"
                 v-model="experience_description"></textarea>
 
             <label for="squad_structure" class="form-label">Squad structure</label>
@@ -50,6 +50,7 @@
     </div>
 </template>
 <script>
+import { toastMessage } from '../../util.js';
 import { mapActions, mapGetters } from 'vuex';
 export default {
     name: 'ProjectDetailsCreate',
@@ -75,10 +76,12 @@ export default {
         ...mapActions('projects', ['fetchProjects']),
         async submitForm() {
             if (this.project_id == '' || this.project_id == null) {
+                toastMessage("Fill out all the required fields", "warning")
                 return false;
             }
 
             try {
+                
                 const back_end = this.back_end ?? '';
                 const front_end = this.front_end ?? '';
                 const tools = this.tools ?? '';
@@ -98,9 +101,9 @@ export default {
                     'project_highlights': this.project_highlights,
                     'other_teams_collab': this.other_teams_collab,
                 };
+                toastMessage('Details saved successfully!', 'loading', null, axios.post('/project_detailed', formData));
+                // await axios.post('/project_detailed', formData);
 
-                const response = await axios.post('/project_detailed', formData);
-                console.log(response.data);
             } catch (error) {
                 console.error('Error submitting form: ', error);
             }
@@ -108,6 +111,8 @@ export default {
     },
     created() {
         this.fetchProjects();
+    },
+    mounted() {
     }
 }
 </script>

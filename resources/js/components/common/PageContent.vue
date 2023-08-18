@@ -38,7 +38,6 @@ export default {
 <style lang="scss" scoped>
 .pageContent {
     margin: 3em 15% 0px;
-    // color: $darkGray;
 }
 
 .row {

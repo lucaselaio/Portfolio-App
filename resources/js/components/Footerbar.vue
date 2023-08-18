@@ -64,7 +64,7 @@ p {
     align-items: flex-start;
     justify-content: space-around;
     padding-top: 1em;
-    height: 5em;
+    height: 7em;
 }
 
 .footer {

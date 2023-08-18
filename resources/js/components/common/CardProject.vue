@@ -8,13 +8,13 @@
                         :src="`images/${transformImageName(project.project_name)}.jpg`" />
                     {{ project.project_name }}
                 </div>
-                <div class="dateRange"> {{ getDateRangeString(project.date_from, project.date_to) }}</div>
+                <div class="dateRange"> {{ rangeString }}</div>
 
             </div>
             <hr>
             <div class="description">
                 <div class="d-flex align-items-center">
-                    {{ extractFromJson(project.about, 'about') }}
+                    {{ about }}
                 </div>
             </div>
             <hr>
@@ -28,7 +28,7 @@
                 </LanguageIconPill>
             </div>
             <div class="d-flex justify-content-end">
-                <a :href="`/project_detailed/${project.project_id}`">See work experience detailed <i class="fa-solid fa-circle-right"></i></a>
+                <a :href="`/project_detailed/${project.project_id}`">See work experience detailed <i class="fa-solid fa-circle-chevron-right"></i></a>
             </div>
         </div>
     </div>
@@ -37,6 +37,7 @@
 import devIcons from '../../devIcons.js';
 import LabelTag from './LabelTag.vue';
 import LanguageIconPill from './LanguageIconPill.vue';
+import { extractFieldFromJson, getDateFromToString } from '../../util.js'
 
 export default {
     name: 'CardProject',
@@ -47,10 +48,13 @@ export default {
     data() {
         return {
             iconsUrl: devIcons,
-            title: 'Inseego',
-            dateRange: 'From Nov - 2022',
-            logo: 'inseego'
+            about: '',
+            rangeString: ''
         }
+    },
+    mounted(){
+        this.about = extractFieldFromJson(this.project.about, 'about')
+        this.rangeString = getDateFromToString(this.project.date_from, this.project.date_to);
     },
     props: {
         project: {
@@ -65,46 +69,6 @@ export default {
                 .replace(/ /g, '_')
                 .replace(/logo.*/, '')
                 + '_logo';
-        },
-        formatDate(date) {
-            if (!date) {
-                return null;
-            }
-            const options = { year: 'numeric', month: 'short' };
-            return new Date(date).toLocaleDateString('en-US', options);
-        },
-
-        calculateMonthDifference(startDate, endDate) {
-            const start = new Date(startDate);
-            const end = endDate ? new Date(endDate) : new Date();
-            return (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
-        },
-
-        getDateRangeString(startDate, endDate) {
-            const fromMonthYear = this.formatDate(startDate);
-            const diffInMonths = this.calculateMonthDifference(startDate, endDate);
-
-            if (!endDate) {
-                const timeString = `( ${diffInMonths} months )`;
-                return `From ${fromMonthYear} | Current - ${timeString}`;
-            }
-
-            const toMonthYear = this.formatDate(endDate);
-
-            if (diffInMonths >= 12) {
-                const numberOfYears = Math.floor(diffInMonths / 12);
-                const remainingMonths = diffInMonths % 12;
-                const yearsString = numberOfYears > 1 ? `${numberOfYears} years` : `${numberOfYears} year`;
-                const monthsString = remainingMonths > 1 ? `${remainingMonths} months` : `${remainingMonths} month`;
-                const timeString = `( ${yearsString} and ${monthsString} )`;
-                return `From ${fromMonthYear} | ${toMonthYear} - ${timeString}`;
-            }
-
-            const timeString = `( ${diffInMonths} months )`;
-            return `From ${fromMonthYear} | ${toMonthYear} - ${timeString}`;
-        },
-        extractFromJson(json, field) {
-            return JSON.parse(json)[field];
         },
         openOnNewTab(url) {
             window.open(url, '_blank');

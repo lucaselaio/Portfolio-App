@@ -16,7 +16,7 @@ export default {
   },
   components: {
     TittleHeader,
-    PageContent
+    PageContent,
   }
 
 }

@@ -17,9 +17,17 @@ class ProjectDetailedController extends Controller
 
     public function show($id)
     {
-        $projectDetailed = ProjectDetailed::where('project_id', $id)->first();;
 
-        return view('project_detailed.show', compact('projectDetailed'));
+        try {
+            $projectDetailed = $this->projectDetailedService->getProjectDetailsByProjectId($id);
+            if(! $projectDetailed){
+                return view('not_found', ['error' => 'Project Datails were not found']);
+            }
+            return view('project_detailed.show', compact('projectDetailed'));
+
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     public function list()
@@ -36,7 +44,7 @@ class ProjectDetailedController extends Controller
     {
         try {
             $this->projectDetailedService->saveData($request);
-            return redirect()->route('project_detailed.create')->with('success', 'Saved successfully');
+            return redirect()->route('project_detailed.create');
         } catch (\Throwable $th) {
             throw $th;
         }

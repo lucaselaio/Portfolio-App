@@ -77,8 +77,6 @@ export default {
 </script>
 <style lang="scss">
 .label {
-    // background-color: black;
-    // color: $darkGray;
     padding: 1em 0.5em;
     border-radius: 15px;
     display: flex;
@@ -108,7 +106,6 @@ export default {
     transition: opacity 0.3s, transform 0.8s;
     opacity: 1;
     border-radius: 15px;
-    // background-color: $mediumGray;
 }
 
 

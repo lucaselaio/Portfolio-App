@@ -1,19 +1,31 @@
 <template>
-    <div>
-        <PageContent>
-            {{ projectDetailed.experience_description }}
-        </PageContent>  
-    </div>
+    <PageContent>
+        <a href="/work"><i class="navigationIcon fa-solid fa-circle-chevron-left"></i></a>
+        <TittleHeader :title="title" :subTitle="rangeString" :centered="true">
+            <span style="font-size: large;">{{ projectDetailed.role_title }}</span>
+        </TittleHeader>
+        <div class="mt-5 experienceDescription" v-html="projectDetailed.experience_description">
+
+        </div>
+    </PageContent>
 </template>
 <script>
 import PageContent from '../../components/common/PageContent.vue';
+import TittleHeader from '../../components/common/TittleHeader.vue';
+import { mapActions, mapGetters } from 'vuex';
+import { getDateFromToString } from '../../util';
 
 export default {
     name: 'ProjectDetailsShow',
-    data(){
-        return{
-            experience_description: '',
+    data() {
+        return {
+            title: '',
+            rangeString: ''
         }
+    },
+    components: {
+        PageContent,
+        TittleHeader
     },
     props: {
         projectDetailed: {
@@ -21,14 +33,28 @@ export default {
             required: true
         },
     },
-    mounted() {
-        this.experience_description = this.projectDetailed.experience_description;
+    created() {
+        this.fetchProject(this.projectDetailed.project_id);
     },
-    components: { 
-        PageContent
-    }
+    watch: {
+        project(val) {
+            if (val) {
+                this.title = val.project_name;
+                this.rangeString = getDateFromToString(val.date_from, val.date_to);
+            }
+        }
+    },
+    computed: {
+        ...mapGetters('projects', ['project']),
+    },
+    methods: {
+        ...mapActions('projects', ['fetchProject']),
+    },
+
 }
 </script>
 <style lang="scss">
-    
+.experienceDescription{
+    font-family: $inter;
+}
 </style>

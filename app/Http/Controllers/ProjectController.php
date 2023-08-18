@@ -17,8 +17,11 @@ class ProjectController extends Controller
 
     public function show($id)
     {
-        // $project = Project::find($id);
-        // return view('projects.show', compact('project'));
+        try {
+            return $this->projectsService->getProjectById($id);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     public function list()

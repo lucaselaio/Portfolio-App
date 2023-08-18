@@ -25,6 +25,11 @@ class ProjectsService implements ProjectsServiceInterface
         ] ?? [];
     }
 
+    public function getProjectById($id)
+    {
+        return Project::find($id);
+    }
+
     private function handleTechnologiesArray($technologies)
     {
         $techName = [
