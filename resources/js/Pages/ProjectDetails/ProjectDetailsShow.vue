@@ -2,7 +2,7 @@
     <PageContent>
         <a href="/work"><i class="navigationIcon fa-solid fa-circle-chevron-left"></i></a>
         <TittleHeader :title="title" :subTitle="rangeString" :centered="true">
-            <span style="font-size: large;">{{ projectDetailed.role_title }}</span>
+            <span class="roleTitle">{{ projectDetailed.role_title }}</span>
         </TittleHeader>
         <div class="mt-5 experienceDescription" v-html="projectDetailed.experience_description">
 
@@ -55,6 +55,13 @@ export default {
 </script>
 <style lang="scss">
 .experienceDescription{
-    font-family: $inter;
+    font-family: $titilliumWeb;
+    font-size: 17px;
+    text-align: justify;
+}
+.roleTitle{
+    font-family: $titilliumWeb;
+    font-size: 25px;
+    font-weight: 600 !important;
 }
 </style>
