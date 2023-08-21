@@ -3,17 +3,18 @@
         <div class="card-body">
             <div class="cardHeader">
                 <div class="title mb-1">
-                    <img @click="openOnNewTab(project.project_url)" class="rounded" style="float: right; margin: 0.3em; cursor: pointer;" width="90" height="90"
+                    <img @click="openOnNewTab(project.project_url)" class="rounded"
+                        style="float: right; margin: 0.3em; cursor: pointer;" width="90" height="90"
                         :src="`images/${transformImageName(project.project_name)}.jpg`" />
                     {{ project.project_name }}
                 </div>
-                <div class="dateRange"> {{ getDateRangeString(project.date_from, project.date_to) }}</div>
+                <div class="dateRange"> {{ rangeString }}</div>
 
             </div>
             <hr>
             <div class="description">
                 <div class="d-flex align-items-center">
-                    {{ extractFromJson(project.about, 'about') }}
+                    {{ about }}
                 </div>
             </div>
             <hr>
@@ -22,9 +23,12 @@
                     <h6>Thecnologies used:</h6>
                 </div>
                 <LanguageIconPill v-for="(techDescription, techName) in project.technologies" :key="techName">
-                    <img class="mb-2" width="40" height="40" :src="iconsUrl[techName]"/>
+                    <img class="mb-2" width="40" height="40" :src="iconsUrl[techName]" />
                     <p style="font-size: 12px;">{{ techDescription }}</p>
                 </LanguageIconPill>
+            </div>
+            <div class="d-flex justify-content-end">
+                <a :href="`/project_detailed/${project.project_id}`">See work experience detailed <i class="fa-solid fa-circle-chevron-right"></i></a>
             </div>
         </div>
     </div>
@@ -33,6 +37,7 @@
 import devIcons from '../../devIcons.js';
 import LabelTag from './LabelTag.vue';
 import LanguageIconPill from './LanguageIconPill.vue';
+import { extractFieldFromJson, getDateFromToString } from '../../util.js'
 
 export default {
     name: 'CardProject',
@@ -43,19 +48,19 @@ export default {
     data() {
         return {
             iconsUrl: devIcons,
-            title: 'Inseego',
-            dateRange: 'From Nov - 2022',
-            logo: 'inseego'
+            about: '',
+            rangeString: ''
         }
+    },
+    mounted(){
+        this.about = extractFieldFromJson(this.project.about, 'about')
+        this.rangeString = getDateFromToString(this.project.date_from, this.project.date_to);
     },
     props: {
         project: {
             type: Object,
             required: true
         }
-    },
-    mounted() {
-        console.log(this.project)
     },
     methods: {
         transformImageName(imageName) {
@@ -65,28 +70,14 @@ export default {
                 .replace(/logo.*/, '')
                 + '_logo';
         },
-        formatDate(date) {
-            if (!date) {
-                return 'Current';
-            }
-            const options = { year: 'numeric', month: 'short' };
-            return new Date(date).toLocaleDateString('en-US', options);
-        },
-        getDateRangeString(startDate, endDate) {
-            const fromMonthYear = this.formatDate(startDate);
-            const toMonthYear = this.formatDate(endDate);
-            return `From ${fromMonthYear} | ${toMonthYear || 'Current'}`;
-        },
-        extractFromJson(json, field){
-            return JSON.parse(json)[field];
-        },
-        openOnNewTab(url){
+        openOnNewTab(url) {
             window.open(url, '_blank');
         }
     }
 }
 </script>
 <style lang="scss" scoped>
+
 .card {
     font-family: $titilliumWeb;
     margin-bottom: 2em;
@@ -102,9 +93,6 @@ export default {
 }
 
 .cardBackground {
-    // color: $darkGray;
-    // background-color: rgb(255, 255, 255, 0.07);
-    // box-shadow: 0px 7px 6px rgba(0, 0, 0, 0.1);
     margin: 20px;
     border-radius: 20px !important;
 }

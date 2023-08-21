@@ -38,4 +38,9 @@ class Project extends Model
         'technologies' => 'array',
         'about' => 'json'
     ];
+
+    public function detailed()
+    {
+        return $this->hasOne(ProjectDetailed::class);
+    }
 }

@@ -2,14 +2,14 @@
     <div class="pageContent">
         <div class="row" v-if="! portrait">
             <div class="col">
-                <slot name="body">
+                <slot>
 
                 </slot>
             </div>
         </div>
         <div class="row" v-else>
             <div class="col colBody">
-                <slot name="body">
+                <slot>
 
                 </slot>
             </div>
@@ -38,7 +38,6 @@ export default {
 <style lang="scss" scoped>
 .pageContent {
     margin: 3em 15% 0px;
-    // color: $darkGray;
 }
 
 .row {

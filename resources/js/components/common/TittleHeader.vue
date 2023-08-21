@@ -3,6 +3,9 @@
         <div class="title mb-1">{{ title }}</div>
         <h5 class="subTitle">{{ subTitle }}</h5>
     </div>
+    <slot>
+        
+    </slot>
     <hr />
 </template>
 <script>
@@ -32,13 +35,14 @@ export default {
 </script>
 <style lang="scss" scoped>
 .header {
-    height: fit-content;
-    padding: 6em 5em 2em 5em;
+    padding: 2em 5em 2em 5em;
 }
 
 .title {
+    font-family: $montserrat;
     font-size: 80px;
     font-weight: bold;
+    text-shadow: -5px 5px 7px rgba(0, 0, 0, 0.2);
 }
 
 hr {

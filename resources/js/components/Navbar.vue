@@ -9,10 +9,14 @@
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/work">Work History</a>
                     </li>
+                    
                 </ul>
             </div>
             <div class="d-flex" role="search">
                 <ul class="navbar-nav">
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/project_detailed/create">Cadastrar detalhes</a>
+                    </li> -->
                     <li class="nav-item">
                         <a href="https://www.linkedin.com/in/lucas-v-azevedo/" target="_blank" class="nav-link"><i
                                 class="fa-brands fa-linkedin fa-lg"></i></a>
@@ -20,7 +24,7 @@
                     <li class="nav-item">
                         <a href="#" target="_blank" class="nav-link"><i class="fa-brands fa-square-github fa-lg"></i></a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item d-flex align-items-center">
                         <ThemeSwitch></ThemeSwitch>
                     </li>
                 </ul>
@@ -42,7 +46,6 @@ export default {
 
 <style lang="scss" scoped>
 nav {
-    // background-color: $glass;
     font-size: 20px;
 }
 </style>

@@ -2,23 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Project;
+use App\Interfaces\ProjectDetailedServiceInterface;
+use App\Models\ProjectDetailed;
 use Illuminate\Http\Request;
-use App\Interfaces\ProjectsServiceInterface;
 
-class ProjectController extends Controller
+class ProjectDetailedController extends Controller
 {
-    protected $projectsService;
+    protected $projectDetailedService;
 
-    public function __construct(ProjectsServiceInterface $projectsService)
+    public function __construct(ProjectDetailedServiceInterface $projectDetailedService)
     {
-        $this->projectsService = $projectsService;
+        $this->projectDetailedService = $projectDetailedService;
     }
 
     public function show($id)
     {
+
         try {
-            return $this->projectsService->getProjectById($id);
+            $projectDetailed = $this->projectDetailedService->getProjectDetailsByProjectId($id);
+            if(! $projectDetailed){
+                return view('not_found', ['error' => 'Project Datails were not found']);
+            }
+            return view('project_detailed.show', compact('projectDetailed'));
+
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -26,26 +32,19 @@ class ProjectController extends Controller
 
     public function list()
     {
-        return $this->projectsService->fetchProjects();
+        // return $this->projectsService->fetchProjects();
     }
 
     public function create()
     {
-        return view('projects.create');
+        return view('project_detailed.create');
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'project_name' => 'required',
-            'date_from' => 'required',
-            'about' => 'required',
-            'technologies' => 'required'
-        ]);
-
         try {
-            Project::create($this->projectsService->preparePostData($request));
-            return redirect()->route('projects.create')->with('success', 'Projeto criado com sucesso.');
+            $this->projectDetailedService->saveData($request);
+            return redirect()->route('project_detailed.create');
         } catch (\Throwable $th) {
             throw $th;
         }
