@@ -10,14 +10,14 @@ export default defineConfig({
         }),
         vue(),
     ],
-    resolve:{
-        alias:{
+    resolve: {
+        alias: {
             vue: 'vue/dist/vue.esm-bundler.js'
         }
     },
     css: {
         preprocessorOptions: {
-            scss: { 
+            scss: {
                 additionalData: `@import "resources/scss/style.scss";`
             }
         }

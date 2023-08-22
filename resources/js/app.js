@@ -2,18 +2,18 @@ import './bootstrap';
 import '@fortawesome/fontawesome-free/css/all.css';
 import 'vue3-toastify/dist/index.css';
 
-import { createI18n } from 'vue-i18n';
-import aboutEn from '../lang/en/about.js';
+// import { createI18n } from 'vue-i18n';
+// import aboutEn from '../lang/en/about.js';
 
 import { createStore } from 'vuex';
 
-const i18n = new createI18n({
-    locale: 'en',
-    messages: {
-        en: aboutEn,
-        pt: {}
-    },
-});
+// const i18n = new createI18n({
+//     locale: 'en',
+//     messages: {
+//         en: aboutEn,
+//         pt: {}
+//     },
+// });
 
 import { createApp } from 'vue';
 
@@ -45,7 +45,7 @@ import NotFound from './Pages/NotFound.vue';
 
 const app = createApp();
 
-app.use(i18n);
+// app.use(i18n);
 
 //components
 app.component('main-component', MainComponent);
