@@ -36,6 +36,8 @@ import WorkHistory from './Pages/WorkHistory.vue';
 import About from './Pages/About.vue';
 import ProjectDetailsCreate from './Pages/ProjectDetails/ProjectDetailsCreate.vue';
 import ProjectDetailsShow from './Pages/ProjectDetails/ProjectDetailsShow.vue';
+import CreateLogin from './Pages/Login/CreateLogin.vue';
+import Login from './Pages/Login/Login.vue';
 
 
 //error code pages
@@ -61,14 +63,17 @@ app.component('theme-switch', ThemeSwitch);
 app.component('project-details-create', ProjectDetailsCreate);
 app.component('project-details-show', ProjectDetailsShow);
 app.component('not-found', NotFound);
-
+app.component('create-login', CreateLogin);
+app.component('login', Login);
 //modules
 import theme from './store/theme.js';
 import projects from './store/projects.js';
+import user from './store/user';
 
 
 const store = createStore({
     modules: {
+        user,
         theme,
         projects
     }
