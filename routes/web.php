@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectDetailedController;
@@ -31,6 +32,12 @@ Route::get('/about', function () {
 Route::get('/work', function () {
     return view('work');
 });
+
+//Login routes
+Route::get('/create-user', [LoginController::class, 'create'])->name('login.create');
+Route::get('/login', [LoginController::class, 'login'])->name('login.login');
+Route::post('/login', [LoginController::class, 'store'])->name('login.store');
+Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('login.authenticate');
 
 //Project routes
 Route::get('/projects', [ProjectController::class, 'list'])->name('projects.list');
