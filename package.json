@@ -2,7 +2,7 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "CI=false vite build && vite build --ssr",
+        "build": "vite build && vite build --ssr",
         "watch": "vite build --watch",
         "docker-restart": "docker-compose down && docker-compose up -d"
     },
@@ -13,6 +13,7 @@
         "sass": "^1.64.2",
         "vite": "^4.0.0",
         "vue-loader": "^16.8.3"
+        
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^6.4.2",
@@ -21,7 +22,7 @@
         "bootstrap": "^5.3.1",
         "eslint": "^8.46.0",
         "tinymce": "^6.6.2",
-        "vue": "^3.3.4",
+        "vue": "^3.2.36",
         "vue-i18n": "^9.2.2",
         "vue3-toastify": "^0.1.12",
         "vuex": "^4.1.0"
