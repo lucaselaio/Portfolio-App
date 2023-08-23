@@ -54,13 +54,9 @@ deploy_to_github:
   script:
     - git clone git@github.com:lucaselaio/portfolio_app.git
     - cd portfolio_app
-    - git config user.name "Seu Nome"  # Configurar nome de usuário
-    - git config user.email "seu@email.com"  # Configurar email
     - git checkout main  # Ou outra branch desejada
     - git pull origin main
-    - git add .
-    - git commit -m "Atualização automática do GitLab"
-    - git push --quiet "https://${GITHUB_TOKEN}@clone git@github.com:lucaselaio/portfolio_app.git" main
+    - git push origin main  # Enviar alterações de volta para o GitHub
   only:
     - main 
 
