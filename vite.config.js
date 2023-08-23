@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
-import { fileURLToPath, URL } from 'url';
 
 export default defineConfig({
     plugins: [
@@ -13,7 +12,7 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            '@': fileURLToPath(new URL('./src', import.meta.url))
+            vue: 'vue/dist/vue.esm-bundler.js'
         }
     },
     css: {
