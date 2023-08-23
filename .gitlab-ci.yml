@@ -17,10 +17,10 @@
 # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
 
 stages:          # List of stages for jobs, and their order of execution
-  - push_to_github
+  # - push_to_github
 #   - build
 #   - test
-  # - deploy
+  - deploy
 
 # build-job:       # This job runs in the build stage, which runs first.
 #   stage: build
@@ -49,20 +49,18 @@ stages:          # List of stages for jobs, and their order of execution
 #     - echo "Deploying application..."
 #     - echo "Application successfully deployed."
 
-push_to_github:
-  stage: push_to_github
+deploy_to_github:
+  stage: deploy
+  image: alpine/git # Uma imagem com Git instalado
   script:
-    - git clone git@github.com:lucaselaio/portfolio_app.git
+    - git clone https://github.com/lucaselaio/portfolio_app.git
     - cd portfolio_app
-    - git config user.name "Lucas Azevedo"
-    - git config user.email "lucas.elaio@gmail.com"
+    - git config user.name "GitLab CI/CD"
+    - git config user.email "gitlab@example.com"
     - git checkout main
-    - git pull origin main
     - git add .
-    - git commit -m "Auto updating GitHub repo"
+    - git commit -m "Atualização automática do GitLab CI/CD"
     - git push origin main
-  only:
-    - main
 
 
 # push_to_github:
