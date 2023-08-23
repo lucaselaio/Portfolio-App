@@ -17,10 +17,10 @@
 # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
 
 stages:          # List of stages for jobs, and their order of execution
-#   - push_to_github
+  - push_to_github
 #   - build
 #   - test
-  - deploy
+  # - deploy
 
 # build-job:       # This job runs in the build stage, which runs first.
 #   stage: build
@@ -49,16 +49,21 @@ stages:          # List of stages for jobs, and their order of execution
 #     - echo "Deploying application..."
 #     - echo "Application successfully deployed."
 
-deploy_to_github:
-  stage: deploy
+push_to_github:
+  stage: push_to_github
   script:
     - git clone git@github.com:lucaselaio/portfolio_app.git
     - cd portfolio_app
-    - git checkout main  # Ou outra branch desejada
+    - git config user.name "Lucas Azevedo"
+    - git config user.email "lucas.elaio@gmail.com"
+    - git checkout main
     - git pull origin main
-    - git push origin main  # Enviar alterações de volta para o GitHub
+    - git add .
+    - git commit -m "Auto updating GitHub repo"
+    - git push origin main
   only:
-    - main 
+    - main
+
 
 # push_to_github:
 #   stage: push_to_github
