@@ -2,7 +2,7 @@
     "private": false,
     "scripts": {
         "dev": "vite",
-        "build": "vite build && vite build --ssr",
+        "build": "vue-tsc --noEmit && vite build",
         "watch": "vite build --watch",
         "docker-restart": "docker-compose down && docker-compose up -d"
     },

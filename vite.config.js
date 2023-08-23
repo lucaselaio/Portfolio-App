@@ -4,7 +4,6 @@ import vue from '@vitejs/plugin-vue';
 import { fileURLToPath, URL } from 'url';
 
 export default defineConfig({
-    base: 'https://portfolioapp-production.up.railway.app/',
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],
