@@ -2,7 +2,7 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "CI=false vite build && vite build --ssr",
+        "build": "vite build --watch",
         "watch": "vite build --watch",
         "docker-restart": "docker-compose down && docker-compose up -d"
     },
