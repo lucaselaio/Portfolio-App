@@ -52,7 +52,7 @@ stages:          # List of stages for jobs, and their order of execution
 
 deploy_to_github:
   stage: deploy
-  image: alpine/git # Uma imagem com Git instalado
+  # image: alpine/git # Uma imagem com Git instalado
   script:
     - git clone https://github.com/lucaselaio/portfolio_app.git
     - cd portfolio_app
