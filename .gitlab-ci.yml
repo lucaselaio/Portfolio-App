@@ -49,19 +49,21 @@ stages:          # List of stages for jobs, and their order of execution
 #     - echo "Deploying application..."
 #     - echo "Application successfully deployed."
 
-
 deploy_to_github:
   stage: deploy
-  # image: alpine/git # Uma imagem com Git instalado
   script:
-    - git clone https://github.com/lucaselaio/portfolio_app.git
+    - git clone git@github.com:lucaselaio/portfolio_app.git
     - cd portfolio_app
-    - git config user.name "GitLab CI/CD"
-    - git config user.email "lucas.elaio@gmail.com"
-    - git checkout main
+    - git config user.name "Seu Nome"  # Configurar nome de usuário
+    - git config user.email "seu@email.com"  # Configurar email
+    - git checkout main  # Ou outra branch desejada
+    - git pull origin main
+    - # Realize outras ações necessárias
     - git add .
-    - git commit -m "Auto updating GitHub repo"
-    - git push origin main
+    - git commit -m "Atualização automática do GitLab"
+    - git push --quiet "https://${GITHUB_TOKEN}@clone git@github.com:lucaselaio/portfolio_app.git" main
+  only:
+    - main 
 
 # push_to_github:
 #   stage: push_to_github
