@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectController;
@@ -16,43 +17,29 @@ use App\Http\Controllers\ProjectDetailedController;
 |
 */
 
-Route::get('/not_found', function () {
-    return view('not_found');
-});
 
+// Route::get('/', function () {
+//     return view('home');
+// });
 
-Route::get('/', function () {
-    return view('home');
-});
-
-Route::get('/about', function () {
-    return view('about');
-});
-
-Route::get('/work', function () {
-    return view('work');
-});
-
-//Login routes
-Route::get('/create-user', [LoginController::class, 'create'])->name('login.create');
-Route::get('/login', [LoginController::class, 'login'])->name('login.login');
-Route::post('/login', [LoginController::class, 'store'])->name('login.store');
+//Login
 Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('login.authenticate');
+Route::get('/check-user', [LoginController::class, 'checkUser'])->name('check_user');
+Route::get('/create-user', [LoginController::class, 'create'])->name('login.create');
+Route::post('/login-store', [LoginController::class, 'store'])->name('login.store');
 
-//Project routes
+//Project
 Route::get('/projects', [ProjectController::class, 'list'])->name('projects.list');
-Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
-Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
-Route::get('/projects/{id}', [ProjectController::class, 'show'])->name('projects.show');
-// Route::get('/projects/{id}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
-// Route::put('/projects/{id}', [ProjectController::class, 'update'])->name('projects.update');
-// Route::delete('/projects/{id}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+Route::post('/projects/store', [ProjectController::class, 'store'])->name('projects.store');
 
-//Project Detailed routes
-// Route::get('/project_detailed', [ProjectDetailedController::class, 'list'])->name('project_detailed.list');
-Route::get('/project_detailed/create', [ProjectDetailedController::class, 'create'])->name('project_detailed.create');
-Route::post('/project_detailed', [ProjectDetailedController::class, 'store'])->name('project_detailed.store');
+//Project Detailed
 Route::get('/project_detailed/{id}', [ProjectDetailedController::class, 'show'])->name('projects.show');
-// Route::get('/projects/{id}/edit', [ProjectDetailedController::class, 'edit'])->name('projects.edit');
-// Route::put('/projects/{id}', [ProjectDetailedController::class, 'update'])->name('projects.update');
-// Route::delete('/projects/{id}', [ProjectDetailedController::class, 'destroy'])->name('projects.destroy');
+Route::get('/get_details/{id}', [ProjectDetailedController::class, 'getDetails'])->name('get_details.show');
+Route::post('/project_detailed', [ProjectDetailedController::class, 'store'])->name('project_detailed.store');
+
+Route::get('/{any}', function () {
+    return view('home');
+})->where('any', '.*');
+
+//Admin
+// Route::get('/admin', [AdminController::class, 'index'])->name('admin');

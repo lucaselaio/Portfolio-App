@@ -15,6 +15,23 @@ class LoginController extends Controller
         $this->userService = $userService;
     }
 
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return response()->json(['success'], 200);
+    }
+
+    public function checkUser()
+    {
+        $user = Auth::user();
+        if ($user) {
+            return true;
+        }
+        return false;
+    }
+
     public function show($id)
     {
 
@@ -33,11 +50,6 @@ class LoginController extends Controller
     public function list()
     {
         // return $this->projectsService->fetchProjects();
-    }
-
-    public function login()
-    {
-        return view('login.login');
     }
 
     public function authenticate(Request $request)
@@ -60,7 +72,7 @@ class LoginController extends Controller
     {
         try {
             $this->userService->createUser($request);
-            return redirect()->route('login.login');
+            return redirect()->route('login');
         } catch (\Throwable $th) {
             throw $th;
         }

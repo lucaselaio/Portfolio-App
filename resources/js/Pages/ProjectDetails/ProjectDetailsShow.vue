@@ -1,10 +1,14 @@
 <template>
     <PageContent>
-        <a href="/work"><i class="navigationIcon fa-solid fa-circle-chevron-left"></i></a>
-        <TittleHeader :title="title" :subTitle="rangeString" :centered="true">
-            <span class="roleTitle">{{ projectDetailed.role_title }}</span>
+        
+        <router-link :to="{ name: 'work' }"><i class="navigationIcon fa-solid fa-circle-chevron-left"></i></router-link>
+        <TittleHeader
+            :title="project?.project?.project_name ?? ''" 
+            :centered="true"
+        >
+            <span class="roleTitle">{{ project?.projectDetails?.role_title ?? '' }}</span>
         </TittleHeader>
-        <div class="mt-5 experienceDescription" v-html="projectDetailed.experience_description">
+        <div class="mt-5 experienceDescription" v-html="project?.projectDetails?.experience_description ?? ''">
 
         </div>
     </PageContent>
@@ -13,42 +17,24 @@
 import PageContent from '../../components/common/PageContent.vue';
 import TittleHeader from '../../components/common/TittleHeader.vue';
 import { mapActions, mapGetters } from 'vuex';
-import { getDateFromToString } from '../../util';
 
 export default {
     name: 'ProjectDetailsShow',
-    data() {
-        return {
-            title: '',
-            rangeString: ''
-        }
+    data(){
+        return {}
+    },
+    methods: {
+        ...mapActions('projects', ['fetchProject']),
+    },
+    computed: {
+        ...mapGetters('projects', ['project']),
     },
     components: {
         PageContent,
         TittleHeader
     },
-    props: {
-        projectDetailed: {
-            type: Object,
-            required: true
-        },
-    },
     created() {
-        this.fetchProject(this.projectDetailed.project_id);
-    },
-    watch: {
-        project(val) {
-            if (val) {
-                this.title = val.project_name;
-                this.rangeString = getDateFromToString(val.date_from, val.date_to);
-            }
-        }
-    },
-    computed: {
-        ...mapGetters('projects', ['project']),
-    },
-    methods: {
-        ...mapActions('projects', ['fetchProject']),
+        this.fetchProject(this.$route.params.id);
     },
 
 }

@@ -1,32 +1,22 @@
 const state = {
-    userName: '',
-    userEmail: ''
+    user: {}
 };
 
 const mutations = {
-    setUserName(state, userName) {
-        state.userName = userName;
-        localStorage.setItem('userName', userName);
-    },
-    setUserEmail(state, userEmail){
-        state.userEmail = userEmail;
-        localStorage.setItem('userEmail', userEmail);
+    setUser(state, user) {
+        state.user = user;
     }
 };
 
 const actions = {
-    setLoggedUser({commit}) {
-        commit('setUserName', localStorage.getItem('setUserName'));
-        commit('setUserEmail', localStorage.getItem('setUserEmail'));
+    setLoggedUser({commit}, user) {
+        commit('setUser', user);
     }
 };
 
 const getters = {
-    userName(state) {
-        return state.userName;
-    },
-    userEmail(state) {
-        return state.userName;
+    user(state) {
+        return state.user;
     }
 };
 

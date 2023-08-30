@@ -16,22 +16,24 @@ const actions = {
     fetchProjects({ commit }) {
         axios.get('/projects')
             .then(response => {
-                commit('setProjects', response.data);
+                commit('setProjects', JSON.parse(response.data.success));
             })
             .catch(error => {
                 console.error(error);
             });
     },
     fetchProject({ commit }, id) {
-        axios.get(`/projects/${id}`)
+        axios.get(`/get_details/${id}`)
             .then(response => {
-                commit('setProject', response.data);
+                commit('setProject', response.data.success);
+                return response.data.success;
             })
             .catch(error => {
                 console.error(error);
                 return;
             });
-    }
+    },
+    
 };
 
 const getters = {

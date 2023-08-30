@@ -9,8 +9,14 @@
     <hr />
 </template>
 <script>
+import { getDateFromToString } from '../../util';
 export default {
     name: 'TittleHeader',
+    data(){
+        return {
+            dateString: ''
+        }
+    },
     props: {
         title: {
             type: String,
@@ -30,7 +36,7 @@ export default {
                 return false;
             }
         }
-    }
+    },
 }
 </script>
 <style lang="scss" scoped>
