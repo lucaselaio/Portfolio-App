@@ -7,7 +7,7 @@
         <div class="content">
             <span>404</span>
             <hr>
-            <p class="subTitle"> {{ errorMessage ?? 'Sorry, not found!' }} </p>
+            <p class="subTitle"> {{ errorMessage ? errorMessage : 'Not found!' }} </p>
         </div>
     </div>
 </template>

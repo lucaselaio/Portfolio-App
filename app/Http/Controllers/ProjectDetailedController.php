@@ -3,16 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\ProjectDetailedServiceInterface;
+use App\Interfaces\ProjectsServiceInterface;
 use App\Models\ProjectDetailed;
 use Illuminate\Http\Request;
 
 class ProjectDetailedController extends Controller
 {
     protected $projectDetailedService;
+    protected $projectsService;
 
-    public function __construct(ProjectDetailedServiceInterface $projectDetailedService)
+    public function __construct(ProjectDetailedServiceInterface $projectDetailedService, ProjectsServiceInterface $projectsService)
     {
         $this->projectDetailedService = $projectDetailedService;
+        $this->projectsService = $projectsService;
     }
 
     public function show($id)
@@ -30,15 +33,20 @@ class ProjectDetailedController extends Controller
         }
     }
 
+    public function getDetails($id)
+    {
+        return response()->json(['success' => $this->projectDetailedService->getProjectDetailsByProjectId($id)], 200);
+    }
+
     public function list()
     {
         // return $this->projectsService->fetchProjects();
     }
 
-    public function create()
-    {
-        return view('project_detailed.create');
-    }
+    // public function create()
+    // {
+    //     return view('project_detailed.create');
+    // }
 
     public function store(Request $request)
     {

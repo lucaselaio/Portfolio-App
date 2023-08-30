@@ -2,9 +2,7 @@
     <div>
         <Navbar></Navbar>
         <div class="container-fluid mainContainer">
-            <slot>
-
-            </slot>
+            <router-view></router-view>
         </div>
         <Footerbar></Footerbar>
     </div>

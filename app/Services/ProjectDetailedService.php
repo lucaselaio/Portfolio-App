@@ -3,10 +3,18 @@
 namespace App\Services;
 
 use App\Interfaces\ProjectDetailedServiceInterface;
+use App\Interfaces\ProjectsServiceInterface;
 use App\Models\ProjectDetailed;
 
 class ProjectDetailedService implements ProjectDetailedServiceInterface
 {
+
+    protected $projectsService;
+
+    public function __construct(ProjectsServiceInterface $projectsService = null) {
+        $this->projectsService = $projectsService;
+    }
+
     public function fetchProjects()
     {
         return ProjectDetailed::all();
@@ -19,7 +27,9 @@ class ProjectDetailedService implements ProjectDetailedServiceInterface
 
     public function getProjectDetailsByProjectId($id)
     {
-        return ProjectDetailed::where('project_id', $id)->first();
+        $projectDetails = ProjectDetailed::where('project_id', $id)->first();
+        $project = $this->projectsService->getProjectById($projectDetails->project_id);
+        return compact('projectDetails', 'project');
     }
 
     public function preparePostData($request)

@@ -78,3 +78,13 @@ export function toastMessage(message, type, duration = 4000, promise = new Promi
     }
 }
 
+export function redirectTo(route){
+    setTimeout(() => {
+        if(route){
+            window.location.href = route;
+        }else{
+            window.history.back();
+        }
+    }, 1000);
+}
+

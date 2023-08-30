@@ -28,7 +28,8 @@
                 </LanguageIconPill>
             </div>
             <div class="d-flex justify-content-end">
-                <a :href="`/project_detailed/${project.project_id}`">See work experience detailed <i class="fa-solid fa-circle-chevron-right"></i></a>
+                <router-link :to="`/project_detailed/${project.project_id}`">See work experience detailed<i class="fa-solid fa-circle-chevron-right"></i></router-link>
+                <!-- <a :href="`/project_detailed/${project.project_id}`">See work experience detailed <i class="fa-solid fa-circle-chevron-right"></i></a> -->
             </div>
         </div>
     </div>
@@ -64,11 +65,13 @@ export default {
     },
     methods: {
         transformImageName(imageName) {
-            return imageName
+            if(imageName){
+                return imageName
                 .toLowerCase()
                 .replace(/ /g, '_')
                 .replace(/logo.*/, '')
                 + '_logo';
+            }
         },
         openOnNewTab(url) {
             window.open(url, '_blank');
