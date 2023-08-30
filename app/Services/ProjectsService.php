@@ -32,31 +32,9 @@ class ProjectsService implements ProjectsServiceInterface
 
     private function handleTechnologiesArray($technologies)
     {
-        $techName = [
-            'git' => 'Git',
-            'javascript' => 'Javascript',
-            'vue' => 'Vue.js',
-            'jquery' => 'JQuery',
-            'php' => 'PHP',
-            'laravel' => 'Laravel',
-            'zendframework' => 'ZendFramework',
-            'cakephp' => 'CakePHP',
-            'redis' => 'Redis',
-            'mysql' => 'MySQL',
-            'html5' => 'HTML',
-            'css' => 'CSS',
-            'phpunit' => 'PHPUnit',
-            'jest' => 'Jest',
-            'jira' => 'Jira',
-            'docker' => 'Docker',
-            'bitbucket' => 'Bitbucket',
-            'gitlab' => 'GitLab',
-        ];
-
         foreach($technologies as $tech){
-            $techArr[$tech] = $techName[$tech];
+            $techArr[$tech['code']] = $tech['name'];
         }
-
         return $techArr ?? [];
     }
 }

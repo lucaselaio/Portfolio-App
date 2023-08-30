@@ -1,6 +1,6 @@
 <template>
     <div class="mt-1 form-check form-switch theme-switch">
-        <input @click.native="toggleTheme()" class="form-check-input toggleSpan mb-2" style="height: 1em !important; width: 2em !important;" type="checkbox" role="switch" id="themeSwitch"
+        <input @click.native="switchTheme()" class="form-check-input toggleSpan mb-2" style="height: 1em !important; width: 2em !important;" type="checkbox" role="switch" id="themeSwitch"
             :checked="selectedTheme === 'Dark'">
     </div>
 </template>
@@ -14,15 +14,17 @@ export default {
             selectedTheme: ''
         }
     },
-    computed: {
-        ...mapGetters('theme', ['iconClass']),
-    },
     created() {
         this.selectedTheme = localStorage.getItem('selectedTheme');
-        this.iconClass = localStorage.getItem('iconClass');
     },
     methods: {
         ...mapActions('theme', ['toggleTheme']),
+        switchTheme(){
+            this.toggleTheme();
+            // const currentTheme = localStorage.getItem('selectedTheme').toLowerCase();
+            // const newTheme = currentTheme == 'light' ? 'dark' : 'light';
+            // this.$primevue.changeTheme('md-'+currentTheme+'-indigo', 'md-'+newTheme+'-indigo', 'primevue/resources/themes/soho-'+newTheme+'/theme.css', () => {});
+        }
     },
 };
 </script>
@@ -36,7 +38,7 @@ export default {
 
 .form-check-input:checked {
     border: none;
-    background-color: #3a3e63 !important;
+    background-color: #2c2e36 !important;
     border-color: #16172100 !important;
 }
 

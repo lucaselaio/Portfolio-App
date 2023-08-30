@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <page-content>
         <form>
             <label for="project_id" class="form-label">Project</label>
             <select required class="form-select" id="project_id" v-model="project_id">
@@ -47,9 +47,10 @@
             </div>
 
         </form>
-    </div>
+    </page-content>
 </template>
 <script>
+import PageContent from '../../components/common/PageContent.vue';
 import { toastMessage } from '../../util.js';
 import { mapActions, mapGetters } from 'vuex';
 export default {
@@ -67,7 +68,7 @@ export default {
             modality: '',
             experience_description: '',
             squad_structure: `{'size': '','structure': ''}`,
-        }
+        };
     },
     computed: {
         ...mapGetters('projects', ['projects']),
@@ -76,16 +77,13 @@ export default {
         ...mapActions('projects', ['fetchProjects']),
         async submitForm() {
             if (this.project_id == '' || this.project_id == null) {
-                toastMessage("Fill out all the required fields", "warning")
+                toastMessage("Fill out all the required fields", "warning");
                 return false;
             }
-
             try {
-
                 const back_end = this.back_end ?? '';
                 const front_end = this.front_end ?? '';
                 const tools = this.tools ?? '';
-
                 let formData = {
                     'project_id': this.project_id,
                     'role_title': this.role_title,
@@ -103,8 +101,8 @@ export default {
                 };
                 toastMessage('Details saved successfully!', 'loading', null, axios.post('/project_detailed', formData));
                 // await axios.post('/project_detailed', formData);
-
-            } catch (error) {
+            }
+            catch (error) {
                 console.error('Error submitting form: ', error);
             }
         }
@@ -113,7 +111,8 @@ export default {
         this.fetchProjects();
     },
     mounted() {
-    }
+    },
+    components: { PageContent }
 }
 </script>
 <style lang="scss">

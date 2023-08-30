@@ -1,11 +1,28 @@
 import './bootstrap';
+import router from './router';
 import '@fortawesome/fontawesome-free/css/all.css';
 import 'vue3-toastify/dist/index.css';
+
+
+//PrimeVue
+import PrimeVue from 'primevue/config';
+import 'primeicons/primeicons.css';
+
+import ConfirmationService from 'primevue/confirmationservice';
+import ToastService from 'primevue/toastservice';
+
+// import "primevue/resources/themes/bootstrap4-light-blue/theme.css";
+import "primevue/resources/themes/bootstrap4-dark-blue/theme.css";
+
+// import "primevue/resources/themes/lara-light-indigo/theme.css";Í
+// import "primevue/resources/themes/mdc-dark-indigo/theme.css";
+
 
 // import { createI18n } from 'vue-i18n';
 // import aboutEn from '../lang/en/about.js';
 
 import { createStore } from 'vuex';
+import createPersistedState from 'vuex-persistedstate';
 
 // const i18n = new createI18n({
 //     locale: 'en',
@@ -16,6 +33,17 @@ import { createStore } from 'vuex';
 // });
 
 import { createApp } from 'vue';
+
+//PrimeVue components import
+import Button from "primevue/button";
+import ConfirmDialog from "primevue/confirmdialog";
+import ConfirmPopup from 'primevue/confirmpopup';
+import InputText from 'primevue/inputtext';
+import Calendar from 'primevue/calendar';
+import Editor from 'primevue/editor';
+import MultiSelect from 'primevue/multiselect';
+import Toast from 'primevue/toast';
+
 
 //components
 import MainComponent from './components/MainComponent.vue';
@@ -38,6 +66,7 @@ import ProjectDetailsCreate from './Pages/ProjectDetails/ProjectDetailsCreate.vu
 import ProjectDetailsShow from './Pages/ProjectDetails/ProjectDetailsShow.vue';
 import CreateLogin from './Pages/Login/CreateLogin.vue';
 import Login from './Pages/Login/Login.vue';
+import AdminPage from './Pages/AdminPage.vue';
 
 
 //error code pages
@@ -46,6 +75,16 @@ import NotFound from './Pages/NotFound.vue';
 const app = createApp();
 
 // app.use(i18n);
+
+//PrimeVue components
+app.component('Button', Button);
+app.component('ConfirmDialog', ConfirmDialog);
+app.component('ConfirmPopup', ConfirmPopup);
+app.component('InputText', InputText);
+app.component('Calendar', Calendar);
+app.component('Editor', Editor);
+app.component('MultiSelect', MultiSelect);
+app.component('Toast', Toast);
 
 //components
 app.component('main-component', MainComponent);
@@ -65,6 +104,8 @@ app.component('project-details-show', ProjectDetailsShow);
 app.component('not-found', NotFound);
 app.component('create-login', CreateLogin);
 app.component('login', Login);
+app.component('admin-page', AdminPage);
+
 //modules
 import theme from './store/theme.js';
 import projects from './store/projects.js';
@@ -76,11 +117,18 @@ const store = createStore({
         user,
         theme,
         projects
-    }
+    },
+    plugins: [createPersistedState({
+        storage: window.sessionStorage,
+    })],
 });
 
 store.dispatch('theme/setTheme');
 
 app.use(store);
+app.use(router);
+app.use(PrimeVue);
+app.use(ConfirmationService);
+app.use(ToastService);
 
 app.mount('#app');

@@ -26,7 +26,8 @@ class ProjectController extends Controller
 
     public function list()
     {
-        return $this->projectsService->fetchProjects();
+        $projects = $this->projectsService->fetchProjects();
+        return response()->json(['success' => json_encode($projects)], 200);
     }
 
     public function create()
@@ -36,18 +37,11 @@ class ProjectController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'project_name' => 'required',
-            'date_from' => 'required',
-            'about' => 'required',
-            'technologies' => 'required'
-        ]);
-
         try {
             Project::create($this->projectsService->preparePostData($request));
-            return redirect()->route('projects.create')->with('success', 'Projeto criado com sucesso.');
+            return response()->json(['success'], 200);
         } catch (\Throwable $th) {
-            throw $th;
+            return response()->json(['error' => $th->getMessage()], 400);
         }
     }
 
