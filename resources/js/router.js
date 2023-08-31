@@ -7,6 +7,8 @@ import About from './Pages/About.vue';
 import WorkHistory from './Pages/WorkHistory.vue';
 import ProjectCreate from './Pages/Projects/ProjectCreate.vue';
 import NotFound from './Pages/NotFound.vue';
+import Login from './Pages/Login/Login.vue'
+import CreateLogin from './Pages/Login/CreateLogin.vue'
 
 import axios from 'axios';
 
@@ -30,7 +32,13 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('./Pages/Login/Login.vue')
+    component: Login
+  },
+  {
+    path: '/create-user',
+    name: 'createUser',
+    component: CreateLogin,
+    props: true,
   },
   //Project 
   {
