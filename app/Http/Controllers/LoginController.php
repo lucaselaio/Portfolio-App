@@ -72,9 +72,9 @@ class LoginController extends Controller
     {
         try {
             $this->userService->createUser($request);
-            return redirect()->route('login');
+            return response()->json(['success'], 200);
         } catch (\Throwable $th) {
-            throw $th;
+            return response()->json(['error' => $th->getMessage()], 401);
         }
     }
 

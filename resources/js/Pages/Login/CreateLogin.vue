@@ -64,7 +64,7 @@ export default {
                     'email': this.email,
                     'password': this.password
                 };
-                toastMessage('User created successfully!', 'loading', null, axios.post('/login', formData));
+                toastMessage('User created successfully!', 'loading', null, axios.post('/login-store', formData));
 
 
             } catch (error) {
