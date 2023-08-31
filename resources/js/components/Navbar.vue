@@ -1,5 +1,5 @@
 <template>
-    <Menubar :model="menuItems">
+    <Menubar :class="$style.myMenuBar" :model="menuItems">
         <template #end>
             <div class="d-flex align-items-center">
                 <div class="menuItem">
@@ -92,6 +92,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 nav {
     font-size: 20px;
 }
@@ -109,4 +110,5 @@ nav {
     z-index: 1050 !important;
     --overlayArrowLeft: 265px !important;
 }
+
 </style>
