@@ -9,6 +9,7 @@ $glass: rgba(255, 255, 255, 0.65);
 $glassDarkMode: rgba(255, 255, 255, 0.45);
 $transparent: rgba(255, 255, 255, 0);
 
+
 //standard
 $regularRadius: 10px;
 
@@ -39,6 +40,7 @@ i.navigationIcon {
 .lightTheme {
     color: $darkGray;
     font-family: "Inter", sans-serif;
+    $menuBackground: $white;
 
     background-size: 100% 100%;
     background-position: 0px 0px;
@@ -51,9 +53,7 @@ i.navigationIcon {
     .subTitle {
         color: $mediumGray;
     }
-    nav {
-        background-color: $glass;
-    }
+
     .cardBackground {
         color: $darkGray;
         background-color: rgb(255, 255, 255, 0.07);
@@ -83,6 +83,7 @@ i.navigationIcon {
 .darkTheme {
     color: $white;
     font-family: "Inter", sans-serif;
+    $menuBackground: $onyx;
 
     background-size: 100% 100%;
     background-position: 0px 0px;
@@ -92,9 +93,7 @@ i.navigationIcon {
         color: $white;
         font-weight: 700;
     }
-    nav {
-        background-color: $onyx;
-    }
+    
     nav ul li a {
         color: $white !important;
     }

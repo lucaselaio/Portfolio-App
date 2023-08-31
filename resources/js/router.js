@@ -14,17 +14,17 @@ import axios from 'axios';
 
 const routes = [
   {
-    path: '/:catchAll(.*)',
-    name: 'catchAll',
-    component: NotFound,
-  },
-  {
     path: '/work',
     name: 'work',
     component: WorkHistory
   },
   {
     path: '/about',
+    name: 'about',
+    component: About
+  },
+  {
+    path: '/',
     name: 'about',
     component: About
   },
@@ -107,6 +107,11 @@ const routes = [
         });
       }
     }
+  },
+  {
+    path: '/:catchAll(.*)',
+    name: 'catchAll',
+    component: NotFound,
   },
 ];
 
