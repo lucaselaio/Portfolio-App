@@ -1,54 +1,26 @@
 <template>
-    <nav class="w-full navbar navbar-expand-lg sticky-top">
-        <div class="container-fluid">
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <router-link class="nav-link" :to="{ name: 'about' }">About</router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" :to="{ name: 'work' }">Work History</router-link>
-                    </li>
-
-                </ul>
+    <Menubar :model="menuItems">
+        <template #end>
+            <div class="d-flex align-items-center">
+                <div class="menuItem">
+                    <!-- <a href="https://www.linkedin.com/in/lucas-v-azevedo/" target="_blank" class="nav-link">
+                        <i class="pi pi-linkedin" style="font-size: 1.5rem; color: #0b66c2;"></i>
+                    </a> -->
+                </div>
+                <div class="menuItem">
+                    <ThemeSwitch></ThemeSwitch>
+                </div>
+                <div v-if="Object.keys(user).length > 0" class="menuItem">
+                    <Button @click="logout($event)" icon="pi pi-sign-out" severity="success" text rounded />
+                    <ConfirmPopup :class="$style.popup"></ConfirmPopup>
+                </div>
+                <div v-else class="menuItem">
+                    <Button @click.native="this.$router.push({ name: 'login' })" icon="pi pi-sign-in" severity="success"
+                        text rounded />
+                </div>
             </div>
-            <div class="d-flex" role="search">
-                <ul class="navbar-nav">
-
-                    <li class="nav-item">
-                        <a href="https://www.linkedin.com/in/lucas-v-azevedo/" target="_blank" class="nav-link"><i
-                                class="fa-brands fa-linkedin fa-lg"></i></a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" target="_blank" class="nav-link"><i class="fa-brands fa-square-github fa-lg"></i></a>
-                    </li>
-                    <div class="vl"></div>
-                    <li class="nav-item d-flex align-items-center">
-                        <ThemeSwitch></ThemeSwitch>
-                    </li>
-
-                    <li v-if="Object.keys(user).length > 0" style="cursor: pointer;" class="nav-item d-flex align-items-center logout">
-                        <!-- <span @click="logout()">Logout</span> -->
-                        <Button @click="logout($event)" icon="pi pi-sign-out" severity="success" text rounded />
-                        <ConfirmPopup :class="$style.popup"></ConfirmPopup>
-                    </li>
-
-                    <li v-if="Object.keys(user).length > 0" class="nav-item d-flex align-items-center">
-                        <Button @click="this.$router.push({ name: 'admin' })" icon="pi pi-cog" severity="secondary" rounded/>
-                    </li>
-                    
-                    <li v-else style="cursor: pointer;" class="nav-item d-flex align-items-center logout">
-                        <!-- <span @click="logout()">Logout</span> -->
-                        <Button @click.native="this.$router.push({ name: 'login' })" icon="pi pi-sign-in" severity="success" text rounded />
-                    </li>
-                    
-
-                </ul>
-
-            </div>
-
-        </div>
-    </nav>
+        </template>
+    </Menubar>
 </template>
 
 <script>
@@ -63,12 +35,38 @@ export default {
     },
     data() {
         return {
+            items: [],
             isLoading: true,
-            auth: false
         }
     },
-    computed:{
+    computed: {
         ...mapGetters('user', ['user']),
+        menuItems() {
+            const baseItems = [
+                {
+                    label: 'About Me',
+                    icon: 'pi pi-user',
+                    to: { name: 'about' },
+                },
+                {
+                    label: 'Work History',
+                    icon: 'pi pi-briefcase',
+                    to: { name: 'work' }
+                }
+            ];
+            if (Object.keys(this.user).length > 0) {
+                return [
+                    ...baseItems,
+                    {
+                        label: 'Admin Page',
+                        icon: 'pi pi-cog',
+                        to: { name: 'admin' },
+                    }
+                ];
+            }
+
+            return baseItems;
+        }
     },
     methods: {
         ...mapMutations('user', ['setUser']),
@@ -88,7 +86,7 @@ export default {
                         });
                 }
             });
-        },
+        }
     },
 }
 </script>
@@ -96,6 +94,10 @@ export default {
 <style lang="scss" scoped>
 nav {
     font-size: 20px;
+}
+
+.menuItem {
+    margin-right: 10px;
 }
 
 .logout {

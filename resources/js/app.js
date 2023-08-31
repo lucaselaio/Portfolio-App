@@ -12,10 +12,11 @@ import ConfirmationService from 'primevue/confirmationservice';
 import ToastService from 'primevue/toastservice';
 
 // import "primevue/resources/themes/bootstrap4-light-blue/theme.css";
-import "primevue/resources/themes/bootstrap4-dark-blue/theme.css";
+// import "primevue/resources/themes/bootstrap4-dark-blue/theme.css";
 
-// import "primevue/resources/themes/lara-light-indigo/theme.css";Í
+// import "primevue/resources/themes/lara-light-indigo/theme.css";
 // import "primevue/resources/themes/mdc-dark-indigo/theme.css";
+import "primevue/resources/themes/mdc-light-indigo/theme.css";
 
 
 // import { createI18n } from 'vue-i18n';
@@ -43,6 +44,7 @@ import Calendar from 'primevue/calendar';
 import Editor from 'primevue/editor';
 import MultiSelect from 'primevue/multiselect';
 import Toast from 'primevue/toast';
+import Menubar from 'primevue/menubar';
 
 
 //components
@@ -85,6 +87,7 @@ app.component('Calendar', Calendar);
 app.component('Editor', Editor);
 app.component('MultiSelect', MultiSelect);
 app.component('Toast', Toast);
+app.component('Menubar', Menubar);
 
 //components
 app.component('main-component', MainComponent);
