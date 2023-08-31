@@ -39,6 +39,17 @@ const routes = [
     name: 'createUser',
     component: CreateLogin,
     props: true,
+    beforeEnter: async (to, from, next) => {
+      const authenticated = await isAuthenticated();
+      if (authenticated) {
+        next();
+      } else {
+        next({
+          path: '/login',
+          query: { redirect: to.fullPath }
+        });
+      }
+    }
   },
   //Project 
   {
