@@ -24,7 +24,7 @@ $titilliumWeb: "Titillium Web", sans-serif;
 body {
     margin: 0 !important;
     padding: 0 !important;
-    height: fit-content;
+    height: 100vh;
 }
 
 .mainContainer {
@@ -88,7 +88,8 @@ i.navigationIcon {
     background-size: 100% 100%;
     background-position: 0px 0px;
     // background-image: radial-gradient(75% 75% at 50% 50%, #565B60FF 0%, #181923 100%);
-    background-image: radial-gradient(90% 90% at 50% 50%, #61768AFF 0%, #29323d 65%);
+    // background-image: radial-gradient(90% 90% at 50% 50%, #61768AFF 0%, #29323d 65%);
+    background-image: radial-gradient(90% 90% at 50% 50%, #61768AFF 0%, #0F223CFF 65%);
     a {
         color: $white;
         font-weight: 700;
