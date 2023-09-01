@@ -39,6 +39,11 @@ export default {
 .pageContent {
     margin: 3em 15% 0px;
 }
+@media screen and (max-width: 995px) {
+    .pageContent {
+        margin: 3em 1% 0px;
+    }
+}
 
 .row {
     display: flex;

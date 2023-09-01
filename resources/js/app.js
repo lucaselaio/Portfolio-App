@@ -45,6 +45,8 @@ import Editor from 'primevue/editor';
 import MultiSelect from 'primevue/multiselect';
 import Toast from 'primevue/toast';
 import Menubar from 'primevue/menubar';
+import Timeline from 'primevue/timeline';
+import Card from 'primevue/card';
 
 
 //components
@@ -88,6 +90,8 @@ app.component('Editor', Editor);
 app.component('MultiSelect', MultiSelect);
 app.component('Toast', Toast);
 app.component('Menubar', Menubar);
+app.component('Timeline', Timeline);
+app.component('Card', Card);
 
 //components
 app.component('main-component', MainComponent);
@@ -122,7 +126,7 @@ const store = createStore({
         projects
     },
     plugins: [createPersistedState({
-        storage: window.sessionStorage,
+        storage: window.localStorage,
     })],
 });
 

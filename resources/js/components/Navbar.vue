@@ -10,7 +10,7 @@
                 <div class="menuItem">
                     <ThemeSwitch></ThemeSwitch>
                 </div>
-                <div v-if="Object.keys(user).length > 0" class="menuItem">
+                <div v-if="Object.keys(userInStore).length > 0" class="menuItem">
                     <Button @click="logout($event)" icon="pi pi-sign-out" severity="success" text rounded />
                     <ConfirmPopup :class="$style.popup"></ConfirmPopup>
                 </div>
@@ -41,6 +41,9 @@ export default {
     },
     computed: {
         ...mapGetters('user', ['user']),
+        userInStore(){
+            return this.user ?? {};
+        },
         menuItems() {
             const baseItems = [
                 {
@@ -54,7 +57,7 @@ export default {
                     to: { name: 'work' }
                 }
             ];
-            if (Object.keys(this.user).length > 0) {
+            if (Object.keys(this.userInStore).length > 0) {
                 return [
                     ...baseItems,
                     {
