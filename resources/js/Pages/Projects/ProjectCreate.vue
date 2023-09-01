@@ -1,6 +1,6 @@
 <template>
     <page-content>
-        <form>
+        <form id="project-form">
             <Toast/>
             <div class="d-flex flex-column">
                 <label>Project Name</label>
