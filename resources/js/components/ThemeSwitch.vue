@@ -1,7 +1,7 @@
 <template>
     <div class="mt-1 form-check form-switch theme-switch">
         <input @click.native="switchTheme()" class="form-check-input toggleSpan mb-2" style="height: 1em !important; width: 2em !important;" type="checkbox" role="switch" id="themeSwitch"
-            :checked="selectedTheme === 'Dark'">
+            :checked="theme === 'Dark'">
     </div>
 </template>
 
@@ -11,19 +11,36 @@ export default {
     name: 'ThemeSwitch',
     data() {
         return {
-            selectedTheme: ''
         }
     },
-    created() {
-        this.selectedTheme = localStorage.getItem('selectedTheme');
+    computed:{
+        ...mapGetters('theme', ['selectedTheme']),
+        theme(){
+            return this.selectedTheme
+        }
+    },
+    created(){
+        this.setPrimeVueTheme(this.theme);
     },
     methods: {
         ...mapActions('theme', ['toggleTheme']),
         switchTheme(){
             this.toggleTheme();
-            // const currentTheme = localStorage.getItem('selectedTheme').toLowerCase();
-            // const newTheme = currentTheme == 'light' ? 'dark' : 'light';
-            // this.$primevue.changeTheme('md-'+currentTheme+'-indigo', 'md-'+newTheme+'-indigo', 'primevue/resources/themes/soho-'+newTheme+'/theme.css', () => {});
+            this.setPrimeVueTheme(this.theme);
+        },
+        setLightPrimeVueTheme(){
+            this.$primevue.changeTheme('my-theme-dark', 'my-theme-light', 'theme-link', () => {});
+        },
+        setDarkPrimeVueTheme(){
+            this.$primevue.changeTheme('my-theme-light', 'my-theme-dark', 'theme-link', () => {});
+        },
+        setPrimeVueTheme(currentTheme){
+            if(currentTheme === 'Dark'){
+                this.setDarkPrimeVueTheme();
+            }
+            if(currentTheme === 'Light'){
+                this.setLightPrimeVueTheme();
+            }
         }
     },
 };
