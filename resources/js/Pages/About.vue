@@ -17,7 +17,7 @@ export default {
   components: {
     TittleHeader,
     PageContent,
-  }
+}
 
 }
 </script>

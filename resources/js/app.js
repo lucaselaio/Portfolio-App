@@ -16,7 +16,7 @@ import ToastService from 'primevue/toastservice';
 
 // import "primevue/resources/themes/lara-light-indigo/theme.css";
 // import "primevue/resources/themes/mdc-dark-indigo/theme.css";
-import "primevue/resources/themes/mdc-light-indigo/theme.css";
+// import "primevue/resources/themes/mdc-light-indigo/theme.css";
 
 
 // import { createI18n } from 'vue-i18n';
