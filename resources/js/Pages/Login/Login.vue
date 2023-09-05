@@ -2,29 +2,34 @@
     <div class="d-flex justify-content-center align-items-center mt-5">
         <Toast />
         <PageContent>
-            <div class="card cardBackground login">
-                <div class="cardHeader mt-3">
-                    <div class="title mb-1 text-center fs-3">
+            <Card class="card cardBackground login">
+                <template #title>
+                    <div class="mb-1 text-center">
                         Login
                     </div>
-                </div>
+                </template>
                 <hr>
-                <div class="card-body">
+                <template #content>
                     <div class="description">
-                        <div class="mb-2">
-                            <label for="email" class="form-label">Email address</label>
-                            <input v-model="email" type="email" class="form-control" id="email"
-                                placeholder="name@example.com">
+                        <div class="mb-5">
+                            <span class="p-float-label">
+                                <InputText class="w-100" id="email" v-model="email" />
+                                <label for="email">Email</label>
+                            </span>
                         </div>
-                        <label for="password" class="form-label">Password</label>
-                        <input v-model="password" type="password" id="password" class="form-control"
-                            aria-describedby="passwordHelpBlock">
+                        <div class="flex justify-content-center">
+                            <span class="p-float-label">
+                                <Password class="w-100" v-model="password" :feedback="false" toggleMask />
+                                <label for="password">Password</label>
+                            </span>
+                        </div>
                     </div>
                     <div class="text-center mt-4">
-                        <Button @click.native="submitForm()" icon="pi pi-sign-in" iconPos="right" label="Login" severity="success" :loading="loading"/>
+                        <Button @click.native="submitForm()" icon="pi pi-sign-in" iconPos="right" label="Login"
+                            severity="success" :loading="loading" />
                     </div>
-                </div>
-            </div>
+                </template>
+            </Card>
         </PageContent>
     </div>
 </template>

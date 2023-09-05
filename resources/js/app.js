@@ -47,6 +47,7 @@ import Toast from 'primevue/toast';
 import Menubar from 'primevue/menubar';
 import Timeline from 'primevue/timeline';
 import Card from 'primevue/card';
+import Password from 'primevue/password';
 
 
 //components
@@ -92,6 +93,7 @@ app.component('Toast', Toast);
 app.component('Menubar', Menubar);
 app.component('Timeline', Timeline);
 app.component('Card', Card);
+app.component('Password', Password);
 
 //components
 app.component('main-component', MainComponent);

@@ -9,7 +9,6 @@
     <hr />
 </template>
 <script>
-import { getDateFromToString } from '../../util';
 export default {
     name: 'TittleHeader',
     data(){
@@ -41,12 +40,12 @@ export default {
 </script>
 <style lang="scss" scoped>
 .header {
-    padding: 2em 5em 2em 5em;
+    margin: 2em 5em 2em 5em;
 }
 
 .title {
     font-family: $montserrat;
-    font-size: 80px;
+    font-size: xxx-large;
     font-weight: bold;
     text-shadow: -5px 5px 7px rgba(0, 0, 0, 0.2);
 }
