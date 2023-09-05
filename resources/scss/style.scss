@@ -1,7 +1,7 @@
 //Project colors
 $lightGrayBlue: #c2c3d3;
 $mediumGray: rgb(128, 128, 128, 0.5);
-$darkGray: #949494;
+$darkGray: #6b6b6b;
 $white: #ffffff;
 $onyx: #181818cd;
 $lightBlue: rgb(63, 100, 234, 0.43);
@@ -9,7 +9,7 @@ $glass: rgba(255, 255, 255, 0.65);
 $glassDarkMode: rgba(255, 255, 255, 0.45);
 $transparent: rgba(255, 255, 255, 0);
 $formsBackground:rgba(248, 248, 248, 0.6);
-$formsBackgroundDark:#0b1a32;
+$formsBackgroundDark:#0b1a3296;
 
 
 //standard
@@ -104,7 +104,7 @@ i.navigationIcon {
         color: $lightGrayBlue;
     }
     .cardBackground {
-        color: $darkGray;
+        color: $white;
         background-color: $formsBackgroundDark;
         box-shadow: 0px 7px 6px rgba(0, 0, 0, 0.1);
     }
