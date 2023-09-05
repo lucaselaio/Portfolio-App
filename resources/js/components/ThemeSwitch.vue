@@ -1,7 +1,10 @@
 <template>
     <div class="mt-1 form-check form-switch theme-switch">
-        <input @click.native="switchTheme()" class="form-check-input toggleSpan mb-2" style="height: 1em !important; width: 2em !important;" type="checkbox" role="switch" id="themeSwitch"
-            :checked="theme === 'Dark'">
+
+        <Button :class="$style.themeButton" @click.native="switchTheme()" :icon="themeIcon" :severity="severityButton" text rounded size="small"/>
+
+        <!-- <input @click.native="switchTheme()" class="form-check-input toggleSpan mb-2" style="height: 1em !important; width: 2em !important;" type="checkbox" role="switch" id="themeSwitch"
+            :checked="theme === 'Dark'"> -->
     </div>
 </template>
 
@@ -17,6 +20,12 @@ export default {
         ...mapGetters('theme', ['selectedTheme']),
         theme(){
             return this.selectedTheme
+        },
+        themeIcon(){
+            return this.theme === 'Dark' ? 'pi pi-moon' : 'pi pi-sun';
+        },
+        severityButton(){
+            return this.theme === 'Dark' ? 'info' : 'warning' ;
         }
     },
     created(){
@@ -65,4 +74,11 @@ export default {
     box-shadow: 0 0 0 0.25rem #ffffff00 !important;
 }
 
+</style>
+
+<style module>
+.themeButton:focus{
+    box-shadow: none !important;
+    border: none !important;
+}
 </style>
