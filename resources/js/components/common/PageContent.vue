@@ -43,6 +43,13 @@ export default {
     .pageContent {
         margin: 3em 1% 0px;
     }
+    div.portrait{
+        display: none;
+    }
+    div.colBody{
+        max-width: 100% !important;
+        padding: 0em 2em;
+    }
 }
 
 .row {
