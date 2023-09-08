@@ -42,7 +42,7 @@ export function getDateFromToString(startDate, endDate) {
     return `From ${fromMonthYear} | ${toMonthYear} - ${timeString}`;
 };
 
-export function toastMessage(message, type, duration = 4000, promise = new Promise((resolve, reject) => setTimeout(reject, 3000)) ) {
+export function toastMessage(message, type, duration = 4000, promise = new Promise((resolve, reject) => setTimeout(reject, 3000))) {
     let standardOptions = {
         autoClose: duration,
         transition: Slide,
@@ -78,13 +78,17 @@ export function toastMessage(message, type, duration = 4000, promise = new Promi
     }
 }
 
-export function redirectTo(route){
+export function redirectTo(route) {
     setTimeout(() => {
-        if(route){
+        if (route) {
             window.location.href = route;
-        }else{
+        } else {
             window.history.back();
         }
     }, 1000);
+}
+
+export function formatCurrency(value) {
+    return value.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 

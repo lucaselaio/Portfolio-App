@@ -3,6 +3,8 @@
         <div class="d-flex flex-column" >
             <Button @click.native="vueRouterManage('addProject')" class="mb-3" icon="pi pi-external-link" iconPos="right" label="Cadastrar projeto" severity="success"/>
             <Button @click.native="vueRouterManage('projectDetailsCreate')" class="mb-3" icon="pi pi-external-link" iconPos="right" label="Cadastrar detalhes de projeto" severity="success"/>
+            <Button @click.native="vueRouterManage('createUser')" class="mb-3" icon="pi pi-external-link" iconPos="right" label="Cadastrar Usuário" severity="success"/>
+            <Button @click.native="vueRouterManage('budgetControl')" class="mb-3" icon="pi pi-external-link" iconPos="right" label="Controle de gastos" severity="success"/>
         </div>
     </PageContent>
 </template>

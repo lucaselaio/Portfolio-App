@@ -48,6 +48,18 @@ import Menubar from 'primevue/menubar';
 import Timeline from 'primevue/timeline';
 import Card from 'primevue/card';
 import Password from 'primevue/password';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import Toolbar from 'primevue/toolbar';
+import Dialog from 'primevue/dialog';
+import Dropdown from 'primevue/dropdown';
+import Textarea from 'primevue/textarea';
+import RadioButton from 'primevue/radiobutton';
+import InputNumber from 'primevue/inputnumber';
+import Panel from 'primevue/panel';
+import Tag from 'primevue/tag';
+import ColorPicker from 'primevue/colorpicker';
+import SelectButton from 'primevue/selectbutton';
 
 
 //components
@@ -63,6 +75,7 @@ import CardProject from './components/common/CardProject.vue'
 import PageContent from './components/common/PageContent.vue';
 import Portrait from './components/common/Portrait.vue';
 import LanguageIconPill from './components/common/LanguageIconPill.vue';
+import BudgetCards from './components/common/BudgetCards.vue';
 
 //pages
 import WorkHistory from './Pages/WorkHistory.vue';
@@ -72,6 +85,10 @@ import ProjectDetailsShow from './Pages/ProjectDetails/ProjectDetailsShow.vue';
 import CreateLogin from './Pages/Login/CreateLogin.vue';
 import Login from './Pages/Login/Login.vue';
 import AdminPage from './Pages/AdminPage.vue';
+
+//Dialogs
+import NewCategoryDialog from './Pages/BudgetControl/NewCategoryDialog.vue';
+import NewSpendDialog from './Pages/BudgetControl/NewSpendDialog.vue';
 
 
 //error code pages
@@ -94,6 +111,18 @@ app.component('Menubar', Menubar);
 app.component('Timeline', Timeline);
 app.component('Card', Card);
 app.component('Password', Password);
+app.component('DataTable', DataTable);
+app.component('Column', Column);
+app.component('Toolbar', Toolbar);
+app.component('Dialog', Dialog);
+app.component('Dropdown', Dropdown);
+app.component('Textarea', Textarea);
+app.component('RadioButton', RadioButton);
+app.component('InputNumber', InputNumber);
+app.component('Panel', Panel);
+app.component('Tag', Tag);
+app.component('ColorPicker', ColorPicker);
+app.component('SelectButton', SelectButton);
 
 //components
 app.component('main-component', MainComponent);
@@ -114,6 +143,9 @@ app.component('not-found', NotFound);
 app.component('create-login', CreateLogin);
 app.component('login', Login);
 app.component('admin-page', AdminPage);
+app.component('budget-cards', BudgetCards);
+app.component('new-category-dialog', NewCategoryDialog);
+app.component('new-spend-dialog', NewSpendDialog);
 
 //modules
 import theme from './store/theme.js';

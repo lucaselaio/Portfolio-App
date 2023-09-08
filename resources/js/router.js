@@ -9,6 +9,7 @@ import ProjectCreate from './Pages/Projects/ProjectCreate.vue';
 import NotFound from './Pages/NotFound.vue';
 import Login from './Pages/Login/Login.vue'
 import CreateLogin from './Pages/Login/CreateLogin.vue'
+import BudgetControl from './Pages/BudgetControl/BudgetControl.vue'
 
 import axios from 'axios';
 
@@ -79,6 +80,23 @@ const routes = [
     path: '/create_details',
     name: 'projectDetailsCreate',
     component: ProjectDetailsCreate,
+    beforeEnter: async (to, from, next) => {
+      const authenticated = await isAuthenticated();
+      if (authenticated) {
+        next();
+      } else {
+        next({
+          path: '/login',
+          query: { redirect: to.fullPath }
+        });
+      }
+    }
+  },
+  //Budget Control
+  {
+    path: '/budget-control',
+    name: 'budgetControl',
+    component: BudgetControl,
     beforeEnter: async (to, from, next) => {
       const authenticated = await isAuthenticated();
       if (authenticated) {
