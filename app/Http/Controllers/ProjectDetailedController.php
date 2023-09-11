@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Interfaces\ProjectDetailedServiceInterface;
 use App\Interfaces\ProjectsServiceInterface;
-use App\Models\ProjectDetailed;
 use Illuminate\Http\Request;
 
 class ProjectDetailedController extends Controller
