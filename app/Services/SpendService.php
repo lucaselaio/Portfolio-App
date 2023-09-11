@@ -7,13 +7,6 @@ use App\Models\Spend;
 
 class SpendService implements SpendServiceInterface
 {
-
-    protected $spendService;
-
-    public function __construct(SpendServiceInterface $spendService = null) {
-        $this->spendService = $spendService;
-    }
-
     public function getAll()
     {
         try {
@@ -37,8 +30,103 @@ class SpendService implements SpendServiceInterface
         }
     }
 
+    public function getSpendsByFilter($year, $month, $cycles, $userId = null)
+    {
+        try {
+            $query = Spend::query()
+                ->whereYear('due_date', $year)
+                ->whereMonth('due_date', $month)
+                ->whereIn('payment_cycle', $cycles)
+                ->with('category');
+
+            if ($userId !== null) {
+                $query->where('user_id', $userId);
+            }
+
+            return $query->get();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function setIsPaid($id, $paid)
+    {
+        try {
+            if (empty($id)) {
+                throw new \InvalidArgumentException('ID is required');
+            }
+
+            $spend = Spend::find($id);
+
+            if (!$spend) {
+                throw new \InvalidArgumentException('Spend not found');
+            }
+
+            $spend->update(['is_paid' => $paid]);
+
+            return response()->json(['message' => 'Paid status successfully updated!']);
+        } catch (\InvalidArgumentException $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occured trying to update is_paid.'], 500);
+        }
+    }
+
+    public function updateSpend($spend)
+    {
+        try {
+            if (empty($spend->id*1)) {
+                throw new \InvalidArgumentException('ID is required');
+            }
+            $edit = Spend::find($spend->id);
+
+            if (!$edit) {
+                throw new \InvalidArgumentException('Spend not found');
+            }
+
+            $edit->update([
+                'name' => $spend->name,
+                'price' => $spend->price,
+                'user_id' => $spend->user_id,
+                'spend_category_id' => $spend->spend_category_id,
+                'due_date' => $spend->due_date,
+                'payment_cycle' => $spend->payment_cycle
+            ]);
+
+            return response()->json(['message' => 'Spend successfully updated!']);
+        } catch (\InvalidArgumentException $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occured trying to update spend.'], 500);
+        }
+    }
+
+    public function deleteSpend($id)
+    {
+        try {
+            if (empty($id*1)) {
+                throw new \InvalidArgumentException('ID is required');
+            }
+            $spend = Spend::find($id);
+
+            if (!$spend) {
+                throw new \InvalidArgumentException('Spend not found');
+            }
+
+            $spend->delete();
+
+            return response()->json(['message' => 'Spend successfully deleted!']);
+        } catch (\InvalidArgumentException $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occured trying to delete spend.'], 500);
+        }
+    }
+
     public function saveData($request)
     {
+        $due_date = new \DateTime($request['due_date']);
+        $request['due_date'] = $due_date->format('Y-m-d H:i:s');
         return Spend::create($request);
     }
 }

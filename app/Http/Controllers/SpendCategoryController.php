@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\SpendCategoriesService;
+use App\Interfaces\SpendCategoriesServiceInterface;
 use Illuminate\Http\Request;
 
-class SpendCategoriesController extends Controller
+class SpendCategoryController extends Controller
 {
     protected $spendCategoriesService;
 
-    public function __construct(SpendCategoriesService $spendCategoriesService)
+    public function __construct(SpendCategoriesServiceInterface $spendCategoriesService)
     {
         $this->spendCategoriesService = $spendCategoriesService;
     }
@@ -24,13 +24,34 @@ class SpendCategoriesController extends Controller
         }
     }
 
+    public function show($id)
+    {
+        //
+    }
+
     public function store(Request $request)
     {
         try {
-            $savedCategory = $this->spendCategoriesService->saveData($request);
+            $savedCategory = $this->spendCategoriesService->saveData($request->toArray());
             return response()->json(['success' => $savedCategory], 200);
         } catch (\Throwable $th) {
             return response()->json(['error' => $th->getMessage()], 400);
         }
+    }
+
+    public function edit($id)
+    {
+        // $project = Project::find($id);
+        // return view('projects.edit', compact('project'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    public function destroy($id)
+    {
+        //
     }
 }

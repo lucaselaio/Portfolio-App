@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('spends', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('paymen_cycle')->default(1);
+            $table->integer('payment_cycle')->default(1);
             $table->foreignId('user_id')->constrained('users');
             $table->float('price');
             $table->foreignId('spend_category_id')->constrained('spend_categories');

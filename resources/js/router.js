@@ -9,7 +9,8 @@ import ProjectCreate from './Pages/Projects/ProjectCreate.vue';
 import NotFound from './Pages/NotFound.vue';
 import Login from './Pages/Login/Login.vue'
 import CreateLogin from './Pages/Login/CreateLogin.vue'
-import BudgetControl from './Pages/BudgetControl/BudgetControl.vue'
+import BudgetControl from './Pages/BudgetControl/BudgetControl.vue';
+import SpendDialog from './Pages/BudgetControl/SpendDialog.vue';
 
 import axios from 'axios';
 

@@ -13,7 +13,7 @@ class SpendCategory extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'spend_category_id';
+    protected $primaryKey = 'id';
 
     protected $table = 'spend_categories';
 
@@ -22,7 +22,7 @@ class SpendCategory extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'spend_category_id',
+        'id',
         'name',
         'label',
         'color'

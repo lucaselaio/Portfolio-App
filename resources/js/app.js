@@ -60,6 +60,7 @@ import Panel from 'primevue/panel';
 import Tag from 'primevue/tag';
 import ColorPicker from 'primevue/colorpicker';
 import SelectButton from 'primevue/selectbutton';
+import ProgressSpinner from 'primevue/progressspinner';
 
 
 //components
@@ -88,7 +89,7 @@ import AdminPage from './Pages/AdminPage.vue';
 
 //Dialogs
 import NewCategoryDialog from './Pages/BudgetControl/NewCategoryDialog.vue';
-import NewSpendDialog from './Pages/BudgetControl/NewSpendDialog.vue';
+import SpendDialog from './Pages/BudgetControl/SpendDialog.vue';
 
 
 //error code pages
@@ -123,6 +124,7 @@ app.component('Panel', Panel);
 app.component('Tag', Tag);
 app.component('ColorPicker', ColorPicker);
 app.component('SelectButton', SelectButton);
+app.component('ProgressSpinner', ProgressSpinner);
 
 //components
 app.component('main-component', MainComponent);
@@ -145,7 +147,7 @@ app.component('login', Login);
 app.component('admin-page', AdminPage);
 app.component('budget-cards', BudgetCards);
 app.component('new-category-dialog', NewCategoryDialog);
-app.component('new-spend-dialog', NewSpendDialog);
+app.component('spend-dialog', SpendDialog);
 
 //modules
 import theme from './store/theme.js';

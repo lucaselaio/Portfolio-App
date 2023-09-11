@@ -1,45 +1,47 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectDetailedController;
+use App\Http\Controllers\SpendCategoryController;
+use App\Http\Controllers\SpendController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-
-// Route::get('/', function () {
-//     return view('home');
-// });
-
-//Login
+// Rotas de Autenticação
 Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('login.authenticate');
-Route::get('/check-user', [LoginController::class, 'checkUser'])->name('check_user');
+Route::get('/check-user', [LoginController::class, 'checkUser'])->name('login.checkUser');
 Route::get('/create-user', [LoginController::class, 'create'])->name('login.create');
 Route::post('/login-store', [LoginController::class, 'store'])->name('login.store');
 
-//Project
-Route::get('/projects', [ProjectController::class, 'list'])->name('projects.list');
-Route::post('/projects/store', [ProjectController::class, 'store'])->name('projects.store');
+// Rotas de Projetos
+Route::prefix('projects')->group(function () {
+    Route::get('/', [ProjectController::class, 'list'])->name('projects.list');
+    Route::post('/store', [ProjectController::class, 'store'])->name('projects.store');
+});
 
-//Project Detailed
-Route::get('/project_detailed/{id}', [ProjectDetailedController::class, 'show'])->name('projects.show');
-Route::get('/get_details/{id}', [ProjectDetailedController::class, 'getDetails'])->name('get_details.show');
-Route::post('/project_detailed', [ProjectDetailedController::class, 'store'])->name('project_detailed.store');
+// Rotas de Detalhes do Projeto
+Route::prefix('project-details')->group(function () {
+    Route::get('/{id}', [ProjectDetailedController::class, 'show'])->name('project-details.show');
+    Route::get('/get-details/{id}', [ProjectDetailedController::class, 'getDetails'])->name('project-details.getDetails');
+    Route::post('/store', [ProjectDetailedController::class, 'store'])->name('project-details.store');
+});
 
-Route::get('/{any}', function () {
+// Rotas de Categorias de Gastos
+Route::prefix('spend-categories')->group(function () {
+    Route::get('/get-categories', [SpendCategoryController::class, 'getAll'])->name('spend-categories.getAll');
+    Route::post('/save', [SpendCategoryController::class, 'store'])->name('spend-categories.store');
+});
+
+// Rota de Gastos
+Route::prefix('spends')->group(function () {
+    Route::get('/get', [SpendController::class, 'getSpends'])->name('spends.get');
+    Route::post('/save', [SpendController::class, 'save'])->name('spends.saveSpend');
+    Route::post('/set-id-paid', [SpendController::class, 'setIsPaid'])->name('spends.setIsPaid');
+    Route::put('/update', [SpendController::class, 'updateSpend'])->name('spends.updateSpend');
+    Route::delete('/delete/{id}', [SpendController::class, 'deteleSpend'])->name('spends.deleteSpend');
+});
+
+// Rota Padrão (caso nenhuma rota corresponda)
+Route::fallback(function () {
     return view('home');
-})->where('any', '.*');
-
-//Admin
-// Route::get('/admin', [AdminController::class, 'index'])->name('admin');
+})->name('fallback');
