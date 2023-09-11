@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\SpendCategoryController;
+use App\Http\Controllers\SpendController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +19,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Route::post('/spend/save', [SpendController::class, 'save'])->name('spend.save');
+
+// Route::get('/get_categories', [SpendCategoryController::class, 'getAll'])->name('category.get');
+// Route::post('/spend-category/save', [SpendCategoryController::class, 'store'])->name('category.store');

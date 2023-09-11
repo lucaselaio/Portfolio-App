@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="m-0 p-0">
+<html lang="en-US" class="m-0 p-0">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +12,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css">
 
         <link id="theme-link" rel="stylesheet" href="/themes/my-theme-light/theme.css">
         {{-- <script src="../../node_modules/tinymce/tinymce.min.js" referrerpolicy="origin"></script> --}}
