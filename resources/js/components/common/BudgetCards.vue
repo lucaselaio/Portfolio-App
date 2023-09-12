@@ -4,7 +4,7 @@
             <p style="color: white; font-size: small;"> {{ title }} </p>
         </template>
         <template #content>
-            <p style="font-size: large; text-align: center;"> {{ formatMoney(amount) }} </p>
+            <p :class="{redFont: amount <= 0}" style="font-size: large; text-align: center;"> {{ formatMoney(amount) }} </p>
         </template>
     </Card>
 </template>
@@ -35,6 +35,12 @@ export default {
     }
 }
 </script>
+<style lang="scss" scoped>
+.redFont{
+    color: rgb(164, 43, 43);
+}
+
+</style>
 <style lang="scss" module>
 @media screen and (max-width: 995px) {
     .bank {

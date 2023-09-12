@@ -29,7 +29,7 @@ class SpendCategoryController extends Controller
         //
     }
 
-    public function store(Request $request)
+    public function save(Request $request)
     {
         try {
             $savedCategory = $this->spendCategoriesService->saveData($request->toArray());

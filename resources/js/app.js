@@ -90,6 +90,7 @@ import AdminPage from './Pages/AdminPage.vue';
 //Dialogs
 import NewCategoryDialog from './Pages/BudgetControl/NewCategoryDialog.vue';
 import SpendDialog from './Pages/BudgetControl/SpendDialog.vue';
+import IncomeDialog from './Pages/BudgetControl/Income/IncomeDialog.vue'
 
 
 //error code pages
@@ -148,6 +149,7 @@ app.component('admin-page', AdminPage);
 app.component('budget-cards', BudgetCards);
 app.component('new-category-dialog', NewCategoryDialog);
 app.component('spend-dialog', SpendDialog);
+app.component('income-dialog', IncomeDialog);
 
 //modules
 import theme from './store/theme.js';
