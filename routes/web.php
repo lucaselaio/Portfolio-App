@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectController;
@@ -27,9 +28,9 @@ Route::prefix('project-details')->group(function () {
 });
 
 // Rotas de Categorias de Gastos
-Route::prefix('spend-categories')->group(function () {
+Route::prefix('spend-category')->group(function () {
     Route::get('/get-categories', [SpendCategoryController::class, 'getAll'])->name('spend-categories.getAll');
-    Route::post('/save', [SpendCategoryController::class, 'store'])->name('spend-categories.store');
+    Route::post('/save', [SpendCategoryController::class, 'save'])->name('spend-categories.save');
 });
 
 // Rota de Gastos
@@ -39,6 +40,11 @@ Route::prefix('spends')->group(function () {
     Route::post('/set-id-paid', [SpendController::class, 'setIsPaid'])->name('spends.setIsPaid');
     Route::put('/update', [SpendController::class, 'updateSpend'])->name('spends.updateSpend');
     Route::delete('/delete/{id}', [SpendController::class, 'deteleSpend'])->name('spends.deleteSpend');
+});
+
+Route::prefix('income')->group(function () {
+    Route::post('/save', [IncomeController::class, 'save']);
+    Route::get('/get', [IncomeController::class, 'getByFilter']);
 });
 
 // Rota Padrão (caso nenhuma rota corresponda)

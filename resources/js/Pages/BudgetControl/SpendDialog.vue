@@ -5,41 +5,42 @@
         <div v-if="loading" class="flex justify-content-center">
             <ProgressSpinner />
         </div>
-        <div class="field">
-            <label for="name">Name</label>
-            <InputText id="name" v-model.trim="spend.name" required="true" />
-            <small class="p-error" v-if="submitted && !spend.name">Name is required.</small>
+        <div v-else>
+            <div class="field">
+                <label for="name">Name</label>
+                <InputText id="name" v-model.trim="spend.name" required="true" />
+                <small class="p-error" v-if="submitted && !spend.name">Name is required.</small>
+            </div>
+            <div class="field">
+                <label for="name">Price</label>
+                <InputNumber v-model="spend.price" inputId="currency-us" mode="currency" currency="USD" locale="en-US"
+                    required="true" />
+                <small class="p-error" v-if="submitted && !spend.price">Price is required.</small>
+            </div>
+            <div class="field">
+                <label for="category" class="mb-3">Category</label>
+                <Dropdown id="category" v-model="spend.category" :options="categories" optionLabel="label"
+                    placeholder="Select a Category" required="true">
+                    <template #value="slotProps">
+                        <div v-if="slotProps.value && slotProps.value.name">
+                            <Tag :value="slotProps.value.label" :style="{ background: '#' + slotProps.value.color }"></Tag>
+                        </div>
+                        <span v-else>
+                            {{ slotProps.placeholder }}
+                        </span>
+                    </template>
+                </Dropdown>
+                <small class="p-error" v-if="submitted && !spend.category">Category is required.</small>
+            </div>
+            <div class="field">
+                <label>Cycle</label>
+                <InputNumber v-model="spend.cycle" showButtons></InputNumber>
+            </div>
+            <div class="field">
+                <label for="dueDate">Due Date</label>
+                <Calendar v-model="spend.due_date" />
+            </div>
         </div>
-        <div class="field">
-            <label for="name">Price</label>
-            <InputNumber v-model="spend.price" inputId="currency-us" mode="currency" currency="USD" locale="en-US"
-                required="true" />
-            <small class="p-error" v-if="submitted && !spend.price">Price is required.</small>
-        </div>
-        <div class="field">
-            <label for="category" class="mb-3">Category</label>
-            <Dropdown id="category" v-model="spend.category" :options="categories" optionLabel="label"
-                placeholder="Select a Category" required="true">
-                <template #value="slotProps">
-                    <div v-if="slotProps.value && slotProps.value.name">
-                        <Tag :value="slotProps.value.label" :style="{ background: '#' + slotProps.value.color }"></Tag>
-                    </div>
-                    <span v-else>
-                        {{ slotProps.placeholder }}
-                    </span>
-                </template>
-            </Dropdown>
-            <small class="p-error" v-if="submitted && !spend.category">Category is required.</small>
-        </div>
-        <div class="field">
-            <label>Cycle</label>
-            <InputNumber v-model="spend.cycle" showButtons></InputNumber>
-        </div>
-        <div class="field">
-            <label for="dueDate">Due Date</label>
-            <Calendar v-model="spend.due_date" />
-        </div>
-
         <template #footer>
             <Button v-if="edit" label="Update" icon="pi pi-check" text @click.native="saveSpend(edit)" />
             <Button v-else label="Save" icon="pi pi-check" text @click.native="saveSpend(false)" />
@@ -105,7 +106,7 @@ export default {
             this.$emit('dialogClosed');
         },
         async fetchCategories() {
-            return await axios.get('/spend-categories/get-categories').then(
+            return await axios.get('/spend-category/get-categories').then(
                 response => {
                     this.fetchedCategories = response.data.success
 
