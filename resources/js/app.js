@@ -61,6 +61,8 @@ import Tag from 'primevue/tag';
 import ColorPicker from 'primevue/colorpicker';
 import SelectButton from 'primevue/selectbutton';
 import ProgressSpinner from 'primevue/progressspinner';
+import TabView from 'primevue/tabview';
+import TabPanel from 'primevue/tabpanel';
 
 
 //components
@@ -126,6 +128,8 @@ app.component('Tag', Tag);
 app.component('ColorPicker', ColorPicker);
 app.component('SelectButton', SelectButton);
 app.component('ProgressSpinner', ProgressSpinner);
+app.component('TabView', TabView);
+app.component('TabPanel', TabPanel);
 
 //components
 app.component('main-component', MainComponent);

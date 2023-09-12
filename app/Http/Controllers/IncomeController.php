@@ -37,4 +37,19 @@ class IncomeController extends Controller
             return response()->json(['error' => $th->getMessage()], 400);
         }
     }
+
+    public function updateIncome(Request $request)
+    {
+        $this->incomeService->updateIncome($request);
+    }
+
+    public function deteleSpend($id){
+        
+        try {
+            $result = $this->incomeService->deleteIncome($id);
+            return response()->json(['success' => $result], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th->getMessage()], 400);
+        }
+    }
 }
