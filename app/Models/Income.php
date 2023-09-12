@@ -12,7 +12,7 @@ class Income extends Model
     protected $table = 'income';
 
     protected $fillable = [
-        'user_id', 'payment_cycle', 'value', 'payment_date'
+        'user_id', 'payment_cycle', 'value', 'payment_date', 'type'
     ];
 
     public function user()

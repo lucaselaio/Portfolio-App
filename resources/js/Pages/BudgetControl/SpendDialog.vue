@@ -1,6 +1,7 @@
 <template>
-    <Dialog v-model:visible="showDialog" :style="{ width: '450px' }" :header="edit ? 'Update Spend' : 'Register Spend'"
-        @after-hide="updateValues" :modal="true" class="p-fluid" v-on:hide="hideDialog">
+    <Dialog v-model:visible="showDialog" :style="{ width: '450px' }"
+        :header="Object.keys(editSpend).length > 0 ? 'Update Spend' : 'Register Spend'" @after-hide="updateValues"
+        :modal="true" class="p-fluid" v-on:hide="hideDialog">
         <Toast />
         <div v-if="loading" class="flex justify-content-center">
             <ProgressSpinner />
@@ -42,7 +43,8 @@
             </div>
         </div>
         <template #footer>
-            <Button v-if="edit" label="Update" icon="pi pi-check" text @click.native="saveSpend(edit)" />
+            <Button v-if="Object.keys(editSpend).length > 0" label="Update" icon="pi pi-check" text
+                @click.native="saveSpend(true)" />
             <Button v-else label="Save" icon="pi pi-check" text @click.native="saveSpend(false)" />
         </template>
     </Dialog>
@@ -69,10 +71,6 @@ export default {
     },
     props: {
         showDialog: {
-            type: Boolean,
-            default: () => false
-        },
-        edit: {
             type: Boolean,
             default: () => false
         },
@@ -129,40 +127,32 @@ export default {
                     due_date: new Date(this.spend.due_date).toISOString().slice(0, 19).replace('T', ' '),
                     payment_cycle: this.spend.cycle
                 }
+                let url = '/spends/save';
+                let action = 'created';
                 if (edit) {
+                    url = '/spends/update';
+                    action = 'updated';
                     formData = { id: this.editSpend.id, ...formData }
-                    axios.put('/spends/update', formData).then(
-                        response => {
-                            this.loading = false;
-                            this.$toast.add({ severity: 'success', summary: 'Spend', detail: 'Spend updated successfully!', life: 3000 });
-                        }
-                    ).catch(
-                        response => {
-                            this.loading = false;
-                            const errorMessage = error.message
-                            this.$toast.add({ severity: 'error', summary: 'Spend', detail: errorMessage, life: 3000 });
-                        }
-                    )
-                } else {
-                    axios.post('/spends/save', formData).then(response => {
-                        this.loading = false;
-                        this.$toast.add({ severity: 'success', summary: 'Spend', detail: 'Spend created successfully!', life: 3000 });
-                    }).catch(error => {
-                        this.loading = false;
-                        const errorMessage = error.message
-                        this.$toast.add({ severity: 'error', summary: 'Spend', detail: errorMessage, life: 3000 });
-                    }).finally(() => {
-                        this.spend = {
-                            name: null,
-                            price: null,
-                            category: '',
-                            due_date: '',
-                            cycle: 1
-                        }
-                        this.submitted = false
-                        this.hideDialog()
-                    })
                 }
+                axios.post(url, formData).then(response => {
+                    this.loading = false;
+                    this.$toast.add({ severity: 'success', summary: 'Spend', detail: `Spend ${action} successfully!`, life: 3000 });
+                }).catch(error => {
+                    this.loading = false;
+                    const errorMessage = error.message
+                    this.$toast.add({ severity: 'error', summary: 'Spend', detail: errorMessage, life: 3000 });
+                }).finally(() => {
+                    this.spend = {
+                        name: null,
+                        price: null,
+                        category: '',
+                        due_date: '',
+                        cycle: 1
+                    }
+                    this.submitted = false
+                    this.hideDialog()
+                })
+
 
             }
             catch (error) {

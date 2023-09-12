@@ -9,7 +9,7 @@
                 </template>
                 <div class="budgetCards gap-2">
                     <BudgetCards :amount="balanceTotal" title="Balance" backgroundColor="--success-color" />
-                    <BudgetCards title="Savings" backgroundColor="--help-color" />
+                    <BudgetCards :amount="savingsTotal" title="Savings" backgroundColor="--help-color" />
                     <BudgetCards :amount="incomeTotal" title="Recent Income" backgroundColor="--warning-color" />
                     <BudgetCards :amount="spendTotal" title="Spend Total" backgroundColor="--danger-color" />
                 </div>
@@ -17,10 +17,10 @@
             <div>
                 <Toolbar class="mb-3">
                     <template #start>
-                        <Button label="New Category" icon="pi pi-plus" severity="danger" class="mr-3"
+                        <Button label="Category" icon="pi pi-plus" severity="danger" class="mr-3"
                             @click="newCategory" />
-                        <Button label="New Spend" icon="pi pi-plus" severity="danger" class="mr-3" @click="newSpend" />
-                        <Button label="New Income" icon="pi pi-plus" severity="warning" class=""
+                        <Button label="Spend" icon="pi pi-plus" severity="danger" class="mr-3" @click="openSpendDialog" />
+                        <Button label="Income" icon="pi pi-plus" severity="warning" class=""
                             @click="openIncomeDialog" />
                     </template>
                     <template #end>
@@ -29,60 +29,119 @@
                             aria-labelledby="multiple" />
                     </template>
                 </Toolbar>
-                <DataTable :loading="loading" class="p-datatable-sm" showGridlines :value="spends"
-                    :class="$style.budgetTable">
-                    <template #loading>
-                        <div class="flex justify-content-center">
-                            <ProgressSpinner />
-                        </div>
-                    </template>
-                    <Column field="name" style="width: 25%" header="Name" sortable></Column>
-                    <Column field="price" style="width: 15%" header="Price" sortable>
-                        <template #body="slotProps">
-                            {{ formatMoney(slotProps.data.price) }}
-                        </template>
-                    </Column>
-                    <Column field="category" style="width: 20%; text-align: center;" header="Category">
-                        <template #body="slotProps">
-                            <div v-if="slotProps.data.category">
-                                <Tag :value="slotProps.data.category.label"
-                                    :style="{ background: '#' + slotProps.data.category.color }" />
-                            </div>
-                        </template>
-                    </Column>
-                    <Column field="due_date" style="width: 20%" header="Due Date" sortable>
-                        <template #body="slotProps">
-                            {{ new Date(slotProps.data.due_date).toISOString().split('T')[0] }}
-                        </template>
-                    </Column>
-                    <Column field="paid" style="width: 10%; text-align: center;" header="Paid" sortable>
-                        <template #body="slotProps">
-                            <Button v-if="slotProps.data.is_paid" icon="pi pi-check-circle" :loading="loadingPaid"
-                                severity="success" text rounded
-                                @click="updateIsPaid(slotProps.data.id, !slotProps.data.is_paid)" size="large" />
-                            <Button v-else icon="pi pi-times" :loading="loadingPaid" severity="danger" text rounded
-                                @click="updateIsPaid(slotProps.data.id, !slotProps.data.is_paid)" size="large" />
-                        </template>
-                    </Column>
-                    <Column field="actions" style="width: 10%;" header="Actions">
-                        <template #body="slotProps">
-                            <Button @click="editSpendDialog(slotProps.data)" icon="pi pi-pencil" severity="warning" text
-                                rounded />
-                            <Button icon="pi pi-times" severity="danger" text rounded
-                                @click="deleteSpend(slotProps.data.id)" />
-                        </template>
-                    </Column>
-                    <template #empty>
-                        <span class="m-5 d-flex justify-content-center align-items-center">
-                            No spend found
-                        </span>
-                    </template>
-                </DataTable>
-                <NewCategoryDialog :show-dialog="showCategoryDialog" @update:showDialog="showCategoryDialog = $event" />
-                <SpendDialog :show-dialog="showSpendDialog" @update:showDialog="showSpendDialog = $event" :edit="edit"
-                    :edit-spend="editSpend" @dialog-closed="updateValues" />
+                    <TabView>
+                        <TabPanel>
+                            <template #header>
+                                <span class="mr-2">Spends</span>
+                                <i class="fa-solid fa-square-minus"></i>
+                            </template>
+                            <DataTable :loading="loading" class="p-datatable-sm" showGridlines :value="spends"
+                                :class="$style.budgetTable">
+                                <template #loading>
+                                    <div class="flex justify-content-center">
+                                        <ProgressSpinner />
+                                    </div>
+                                </template>
+                                <Column field="name" style="width: 25%" header="Name" sortable></Column>
+                                <Column field="price" style="width: 15%" header="Price" sortable>
+                                    <template #body="slotProps">
+                                        {{ formatMoney(slotProps.data.price) }}
+                                    </template>
+                                </Column>
+                                <Column field="category" style="width: 20%; text-align: center;" header="Category">
+                                    <template #body="slotProps">
+                                        <div v-if="slotProps.data.category">
+                                            <Tag :value="slotProps.data.category.label"
+                                                :style="{ background: '#' + slotProps.data.category.color }" />
+                                        </div>
+                                    </template>
+                                </Column>
+                                <Column field="due_date" style="width: 20%" header="Due Date" sortable>
+                                    <template #body="slotProps">
+                                        {{ new Date(slotProps.data.due_date).toISOString().split('T')[0] }}
+                                    </template>
+                                </Column>
+                                <Column field="paid" style="width: 10%; text-align: center;" header="Paid" sortable>
+                                    <template #body="slotProps">
+                                        <Button v-if="slotProps.data.is_paid" icon="pi pi-check-circle"
+                                            :loading="loadingButton" severity="success" text rounded
+                                            @click="updateIsPaid(slotProps.data.id, !slotProps.data.is_paid)"
+                                            size="large" />
+                                        <Button v-else icon="pi pi-times" :loading="loadingButton" severity="danger" text
+                                            rounded @click="updateIsPaid(slotProps.data.id, !slotProps.data.is_paid)"
+                                            size="large" />
+                                    </template>
+                                </Column>
+                                <Column field="actions" style="width: 10%;" header="Actions">
+                                    <template #body="slotProps">
+                                        <Button @click="editSpendDialog(slotProps.data)" icon="pi pi-pencil"
+                                            severity="warning" text rounded />
+                                        <Button icon="pi pi-times" severity="danger" text rounded
+                                            @click="deleteSpend(slotProps.data.id)" />
+                                    </template>
+                                </Column>
+                                <template #empty>
+                                    <span class="m-5 d-flex justify-content-center align-items-center">
+                                        No Spend found
+                                    </span>
+                                </template>
+                            </DataTable>
+                        </TabPanel>
+                        <TabPanel>
+                            <template #header>
+                                <span class="mr-2">Incomes</span>
+                                <i class="fa-solid fa-square-plus"></i>
+                            </template>
+                            <DataTable :loading="loading" class="p-datatable-sm" showGridlines :value="incomes"
+                                :class="$style.budgetTable">
+                                <template #loading>
+                                    <div class="flex justify-content-center">
+                                        <ProgressSpinner />
+                                    </div>
+                                </template>
+                                <Column field="type" style="width: 25%" header="Source" sortable></Column>
+                                <Column field="value" style="width: 15%" header="Value" sortable>
+                                    <template #body="slotProps">
+                                        {{ formatMoney(slotProps.data.value) }}
+                                    </template>
+                                </Column>
+                                <Column field="payment_date" style="width: 20%" header="Payment Date" sortable>
+                                    <template #body="slotProps">
+                                        {{ new Date(slotProps.data.payment_date).toISOString().split('T')[0] }}
+                                    </template>
+                                </Column>
+                                <Column field="actions" style="width: 10%;" header="Actions">
+                                    <template #body="slotProps">
+                                        <Button @click="editIncomeDialog(slotProps.data)" icon="pi pi-pencil"
+                                            severity="warning" text rounded />
+                                        <Button icon="pi pi-times" severity="danger" text rounded
+                                            @click="deleteIncome(slotProps.data.id)" />
+                                    </template>
+                                </Column>
+                                
+                                <template #empty>
+                                    <span class="m-5 d-flex justify-content-center align-items-center">
+                                        No Income found
+                                    </span>
+                                </template>
+                            </DataTable>
+                        </TabPanel>
+                    </TabView>
 
-                <IncomeDialog :show-dialog="showIncomeDialog" @update:showDialog="showIncomeDialog = $event"></IncomeDialog>
+                <NewCategoryDialog :show-dialog="showCategoryDialog" @update:showDialog="showCategoryDialog = $event" />
+                <SpendDialog 
+                    :show-dialog="showSpendDialog"
+                    :edit-spend="editSpend"
+                    @update:showDialog="showSpendDialog = $event"
+                    @dialog-closed="updateValues"
+                />
+
+                <IncomeDialog 
+                    :show-dialog="showIncomeDialog"
+                    :edit-income="editIncome"
+                    @update:showDialog="showIncomeDialog = $event"
+                    @dialog-closed="updateValues"
+                />
             </div>
         </div>
     </PageContent>
@@ -108,7 +167,7 @@ export default {
     data() {
         return {
             loading: true,
-            loadingPaid: false,
+            loadingButton: false,
             monthYear: new Date(),
             showCategoryDialog: false,
             showSpendDialog: false,
@@ -120,8 +179,8 @@ export default {
                 { name: 'Cycle 1', value: 1 },
                 { name: 'Cycle 2', value: 2 }
             ],
-            edit: false,
-            editSpend: {}
+            editSpend: {},
+            editIncome: {}
         };
     },
     methods: {
@@ -131,7 +190,7 @@ export default {
         newCategory() {
             this.showCategoryDialog = true;
         },
-        newSpend() {
+        openSpendDialog() {
             this.showSpendDialog = true;
         },
         openIncomeDialog() {
@@ -139,8 +198,11 @@ export default {
         },
         editSpendDialog(spend) {
             this.editSpend = { ...spend };
-            this.edit = true;
-            this.newSpend();
+            this.openSpendDialog();
+        },
+        editIncomeDialog(income) {
+            this.editIncome = { ...income };
+            this.openIncomeDialog();
         },
         deleteSpend(id) {
             this.$confirm.require({
@@ -158,6 +220,22 @@ export default {
                 }
             });
         },
+        deleteIncome(id) {
+            this.$confirm.require({
+                target: event.currentTarget,
+                message: 'Are you sure you want to delete?',
+                icon: 'pi pi-exclamation-triangle',
+                accept: () => {
+                    axios.delete(`/income/delete/${id}`).then(response => {
+                        this.$toast.add({ severity: 'success', summary: 'Spend', detail: 'Income deleted successfully!', life: 3000 });
+                        this.updateValues();
+                    }).catch(error => {
+                        console.error(error)
+                        this.$toast.add({ severity: 'error', summary: 'Spend', detail: errorMessage, life: 3000 });
+                    })
+                }
+            });
+        },
         updateValues() {
             const filters = this.getFilters();
             if (filters.cycles.length === 0 || !filters.month || !filters.year) {
@@ -167,12 +245,11 @@ export default {
                 return
             }
             this.editSpend = {};
-            this.edit = false;
             this.fetchSpends();
             this.fetchIncome();
         },
         async updateIsPaid(id, isPaid) {
-            this.loadingPaid = true;
+            this.loadingButton = true;
             await axios.post('/spends/set-id-paid', {
                 id: id,
                 is_paid: isPaid
@@ -181,7 +258,7 @@ export default {
             }).catch(error => {
                 console.error(error)
             }).finally(() => {
-                this.loadingPaid = false;
+                this.loadingButton = false;
             });
         },
         getFilters() {
@@ -286,10 +363,19 @@ export default {
             })
             return total;
         },
-        balanceTotal(){
+        savingsTotal() {
+            let total = 0;
+            this.spends.map(spend => {
+                if (spend.category.name === "savings") {
+                    total += spend.price;
+                }
+            })
+            return total;
+        },
+        balanceTotal() {
             let spendTotal = 0;
             this.spends.map(spend => {
-                if(spend.is_paid){
+                if (spend.is_paid) {
                     spendTotal += spend.price;
                 }
             })
