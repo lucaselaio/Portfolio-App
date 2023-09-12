@@ -35,7 +35,6 @@ export default {
         ...mapActions('theme', ['toggleTheme']),
         switchTheme(){
             this.toggleTheme();
-            this.setPrimeVueTheme(this.theme);
         },
         setLightPrimeVueTheme(){
             this.$primevue.changeTheme('my-theme-dark', 'my-theme-light', 'theme-link', () => {});
@@ -52,6 +51,11 @@ export default {
             }
         }
     },
+    watch:{
+        selectedTheme(theme){
+            this.setPrimeVueTheme(theme);
+        }
+    }
 };
 </script>
 

@@ -8,80 +8,140 @@
                     </button>
                 </template>
                 <div class="budgetCards gap-2">
-                    <BudgetCards title="Bank" backgroundColor="--success-color" />
-                    <BudgetCards title="Savings" backgroundColor="--help-color" />
-                    <BudgetCards title="Recent Income" backgroundColor="--warning-color" />
+                    <BudgetCards :amount="balanceTotal" title="Balance" backgroundColor="--success-color" />
+                    <BudgetCards :amount="savingsTotal" title="Savings" backgroundColor="--help-color" />
+                    <BudgetCards :amount="incomeTotal" title="Recent Income" backgroundColor="--warning-color" />
                     <BudgetCards :amount="spendTotal" title="Spend Total" backgroundColor="--danger-color" />
                 </div>
             </Panel>
             <div>
                 <Toolbar class="mb-3">
                     <template #start>
-                        <Button label="New Category" icon="pi pi-plus" severity="success" class="mr-5 mb-3"
+                        <Button label="Category" icon="pi pi-plus" severity="danger" class="mr-3"
                             @click="newCategory" />
-                        <Button label="New Spend" icon="pi pi-plus" severity="success" class="mb-3" @click="newSpend" />
+                        <Button label="Spend" icon="pi pi-plus" severity="danger" class="mr-3" @click="openSpendDialog" />
+                        <Button label="Income" icon="pi pi-plus" severity="warning" class=""
+                            @click="openIncomeDialog" />
                     </template>
                     <template #end>
-                        <span class="p-float-label mr-3">
-                            <Calendar v-model="monthYear" view="month" dateFormat="mm/yy" inputId="monthYear" />
-                            <label for="monthYear">{{ monthYearLabel }}</label>
-                        </span>
+                        <Calendar class="mr-3" v-model="monthYear" view="month" dateFormat="mm/yy" inputId="monthYear" />
                         <SelectButton id="cycles" v-model="cyclesSelected" :options="cycles" optionLabel="name" multiple
                             aria-labelledby="multiple" />
                     </template>
                 </Toolbar>
-                <DataTable :loading="loading" class="p-datatable-sm" showGridlines :value="spends"
-                    :class="$style.budgetTable">
-                    <template #loading>
-                        <div class="flex justify-content-center">
-                            <ProgressSpinner />
-                        </div>
-                    </template>
-                    <Column field="name" style="width: 25%" header="Name" sortable></Column>
-                    <Column field="price" style="width: 15%" header="Price" sortable>
-                        <template #body="slotProps">
-                            {{ formatMoney(slotProps.data.price) }}
-                        </template>
-                    </Column>
-                    <Column field="category" style="width: 20%; text-align: center;" header="Category">
-                        <template #body="slotProps">
-                            <div v-if="slotProps.data.category">
-                                <Tag :value="slotProps.data.category.label"
-                                    :style="{ background: '#' + slotProps.data.category.color }" />
-                            </div>
-                        </template>
-                    </Column>
-                    <Column field="due_date" style="width: 20%" header="Due Date" sortable>
-                        <template #body="slotProps">
-                            {{ new Date(slotProps.data.due_date).toISOString().split('T')[0] }}
-                        </template>
-                    </Column>
-                    <Column field="paid" style="width: 10%; text-align: center;" header="Paid" sortable>
-                        <template #body="slotProps">
-                            <Button v-if="slotProps.data.is_paid" icon="pi pi-check-circle" :loading="loadingPaid"
-                                severity="success" text rounded
-                                @click="updateIsPaid(slotProps.data.id, !slotProps.data.is_paid)" size="large" />
-                            <Button v-else icon="pi pi-times" :loading="loadingPaid" severity="danger" text rounded
-                                @click="updateIsPaid(slotProps.data.id, !slotProps.data.is_paid)" size="large" />
-                        </template>
-                    </Column>
-                    <Column field="actions" style="width: 10%;" header="Actions">
-                        <template #body="slotProps">
-                            <Button @click="editSpendDialog(slotProps.data)" icon="pi pi-pencil" severity="warning" text
-                                rounded />
-                            <Button icon="pi pi-times" severity="danger" text rounded
-                                @click="deleteSpend(slotProps.data.id)" />
-                        </template>
-                    </Column>
-                    <template #empty>
-                        <span class="m-5 d-flex justify-content-center align-items-center">
-                            No spend found
-                        </span>
-                    </template>
-                </DataTable>
+                    <TabView>
+                        <TabPanel>
+                            <template #header>
+                                <span class="mr-2">Spends</span>
+                                <i class="fa-solid fa-square-minus"></i>
+                            </template>
+                            <DataTable :loading="loading" class="p-datatable-sm" showGridlines :value="spends"
+                                :class="$style.budgetTable">
+                                <template #loading>
+                                    <div class="flex justify-content-center">
+                                        <ProgressSpinner />
+                                    </div>
+                                </template>
+                                <Column field="name" style="width: 25%" header="Name" sortable></Column>
+                                <Column field="price" style="width: 15%" header="Price" sortable>
+                                    <template #body="slotProps">
+                                        {{ formatMoney(slotProps.data.price) }}
+                                    </template>
+                                </Column>
+                                <Column field="category" style="width: 20%; text-align: center;" header="Category">
+                                    <template #body="slotProps">
+                                        <div v-if="slotProps.data.category">
+                                            <Tag :value="slotProps.data.category.label"
+                                                :style="{ background: '#' + slotProps.data.category.color }" />
+                                        </div>
+                                    </template>
+                                </Column>
+                                <Column field="due_date" style="width: 20%" header="Due Date" sortable>
+                                    <template #body="slotProps">
+                                        {{ new Date(slotProps.data.due_date).toISOString().split('T')[0] }}
+                                    </template>
+                                </Column>
+                                <Column field="paid" style="width: 10%; text-align: center;" header="Paid" sortable>
+                                    <template #body="slotProps">
+                                        <Button v-if="slotProps.data.is_paid" icon="pi pi-check-circle"
+                                            :loading="loadingButton" severity="success" text rounded
+                                            @click="updateIsPaid(slotProps.data.id, !slotProps.data.is_paid)"
+                                            size="large" />
+                                        <Button v-else icon="pi pi-times" :loading="loadingButton" severity="danger" text
+                                            rounded @click="updateIsPaid(slotProps.data.id, !slotProps.data.is_paid)"
+                                            size="large" />
+                                    </template>
+                                </Column>
+                                <Column field="actions" style="width: 10%;" header="Actions">
+                                    <template #body="slotProps">
+                                        <Button @click="editSpendDialog(slotProps.data)" icon="pi pi-pencil"
+                                            severity="warning" text rounded />
+                                        <Button icon="pi pi-times" severity="danger" text rounded
+                                            @click="deleteSpend(slotProps.data.id)" />
+                                    </template>
+                                </Column>
+                                <template #empty>
+                                    <span class="m-5 d-flex justify-content-center align-items-center">
+                                        No Spend found
+                                    </span>
+                                </template>
+                            </DataTable>
+                        </TabPanel>
+                        <TabPanel>
+                            <template #header>
+                                <span class="mr-2">Incomes</span>
+                                <i class="fa-solid fa-square-plus"></i>
+                            </template>
+                            <DataTable :loading="loading" class="p-datatable-sm" showGridlines :value="incomes"
+                                :class="$style.budgetTable">
+                                <template #loading>
+                                    <div class="flex justify-content-center">
+                                        <ProgressSpinner />
+                                    </div>
+                                </template>
+                                <Column field="type" style="width: 25%" header="Source" sortable></Column>
+                                <Column field="value" style="width: 15%" header="Value" sortable>
+                                    <template #body="slotProps">
+                                        {{ formatMoney(slotProps.data.value) }}
+                                    </template>
+                                </Column>
+                                <Column field="payment_date" style="width: 20%" header="Payment Date" sortable>
+                                    <template #body="slotProps">
+                                        {{ new Date(slotProps.data.payment_date).toISOString().split('T')[0] }}
+                                    </template>
+                                </Column>
+                                <Column field="actions" style="width: 10%;" header="Actions">
+                                    <template #body="slotProps">
+                                        <Button @click="editIncomeDialog(slotProps.data)" icon="pi pi-pencil"
+                                            severity="warning" text rounded />
+                                        <Button icon="pi pi-times" severity="danger" text rounded
+                                            @click="deleteIncome(slotProps.data.id)" />
+                                    </template>
+                                </Column>
+                                
+                                <template #empty>
+                                    <span class="m-5 d-flex justify-content-center align-items-center">
+                                        No Income found
+                                    </span>
+                                </template>
+                            </DataTable>
+                        </TabPanel>
+                    </TabView>
+
                 <NewCategoryDialog :show-dialog="showCategoryDialog" @update:showDialog="showCategoryDialog = $event" />
-                <SpendDialog :show-dialog="showSpendDialog" @update:showDialog="showSpendDialog = $event" :edit="edit"
-                    :edit-spend="editSpend" @dialog-closed="updateValues" />
+                <SpendDialog 
+                    :show-dialog="showSpendDialog"
+                    :edit-spend="editSpend"
+                    @update:showDialog="showSpendDialog = $event"
+                    @dialog-closed="updateValues"
+                />
+
+                <IncomeDialog 
+                    :show-dialog="showIncomeDialog"
+                    :edit-income="editIncome"
+                    @update:showDialog="showIncomeDialog = $event"
+                    @dialog-closed="updateValues"
+                />
             </div>
         </div>
     </PageContent>
@@ -94,52 +154,55 @@ import NewCategoryDialog from './NewCategoryDialog.vue';
 import SpendDialog from './SpendDialog.vue';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
+import IncomeDialog from './Income/IncomeDialog.vue';
 
 export default {
     components: {
         PageContent,
         BudgetCards,
         NewCategoryDialog,
-        SpendDialog
+        SpendDialog,
+        IncomeDialog
     },
     data() {
         return {
             loading: true,
-            loadingPaid: false,
+            loadingButton: false,
             monthYear: new Date(),
             showCategoryDialog: false,
             showSpendDialog: false,
+            showIncomeDialog: false,
             spends: [],
+            incomes: [],
             cyclesSelected: [{ name: 'Cycle 1', value: 1 }],
             cycles: [
                 { name: 'Cycle 1', value: 1 },
                 { name: 'Cycle 2', value: 2 }
             ],
-            edit: false,
-            editSpend: {}
+            editSpend: {},
+            editIncome: {}
         };
     },
     methods: {
         formatMoney(value) {
             return formatCurrency(value);
         },
-        getSpendTotal() {
-            let total = 0;
-            this.spends.map(spend => {
-                total += spend.price;
-            })
-            return total;
-        },
         newCategory() {
             this.showCategoryDialog = true;
         },
-        newSpend() {
+        openSpendDialog() {
             this.showSpendDialog = true;
+        },
+        openIncomeDialog() {
+            this.showIncomeDialog = true;
         },
         editSpendDialog(spend) {
             this.editSpend = { ...spend };
-            this.edit = true;
-            this.newSpend();
+            this.openSpendDialog();
+        },
+        editIncomeDialog(income) {
+            this.editIncome = { ...income };
+            this.openIncomeDialog();
         },
         deleteSpend(id) {
             this.$confirm.require({
@@ -149,7 +212,23 @@ export default {
                 accept: () => {
                     axios.delete(`/spends/delete/${id}`).then(response => {
                         this.$toast.add({ severity: 'success', summary: 'Spend', detail: 'Spend deleted successfully!', life: 3000 });
-                        this.fetchSpends();
+                        this.updateValues();
+                    }).catch(error => {
+                        console.error(error)
+                        this.$toast.add({ severity: 'error', summary: 'Spend', detail: errorMessage, life: 3000 });
+                    })
+                }
+            });
+        },
+        deleteIncome(id) {
+            this.$confirm.require({
+                target: event.currentTarget,
+                message: 'Are you sure you want to delete?',
+                icon: 'pi pi-exclamation-triangle',
+                accept: () => {
+                    axios.delete(`/income/delete/${id}`).then(response => {
+                        this.$toast.add({ severity: 'success', summary: 'Spend', detail: 'Income deleted successfully!', life: 3000 });
+                        this.updateValues();
                     }).catch(error => {
                         console.error(error)
                         this.$toast.add({ severity: 'error', summary: 'Spend', detail: errorMessage, life: 3000 });
@@ -158,31 +237,68 @@ export default {
             });
         },
         updateValues() {
+            const filters = this.getFilters();
+            if (filters.cycles.length === 0 || !filters.month || !filters.year) {
+                this.$toast.add({ severity: 'warn', summary: 'No filter selected', detail: 'Please select a date and cycle(s) to display spends', life: 4000 });
+                this.spends = [];
+                this.loading = false;
+                return
+            }
             this.editSpend = {};
-            this.edit = false;
             this.fetchSpends();
+            this.fetchIncome();
         },
         async updateIsPaid(id, isPaid) {
-            this.loadingPaid = true;
+            this.loadingButton = true;
             await axios.post('/spends/set-id-paid', {
                 id: id,
                 is_paid: isPaid
             }).then(response => {
                 this.spends.find(spend => spend.id === id).is_paid = isPaid;
             }).catch(error => {
-                console.log({ error })
+                console.error(error)
             }).finally(() => {
-                this.loadingPaid = false;
+                this.loadingButton = false;
             });
         },
+        getFilters() {
+            return {
+                month: this.monthYear.getMonth() + 1,
+                year: this.monthYear.getFullYear(),
+                cycles: this.cyclesSelected.map(cycle => cycle.value),
+                user: this?.user?.id
+            }
+
+        },
+        async fetchIncome() {
+            this.loading = true;
+            const filters = this.getFilters();
+            try {
+                const response = await axios.get(`/income/get`, {
+                    params: {
+                        year: filters.year,
+                        month: filters.month,
+                        cycles: filters.cycles,
+                        user: filters.user,
+                    },
+                });
+
+                this.loading = false;
+                if (response.data) {
+                    this.incomes = response.data;
+                } else {
+                    this.incomes = [];
+                }
+            } catch (error) {
+                console.error('Error fetching spends:', error);
+                this.incomes = [];
+            }
+        },
         async fetchSpends() {
-            const month = this.monthYear.getMonth() + 1;
-            const year = this.monthYear.getFullYear();
-            const cycles = this.cyclesSelected.map(cycle => cycle.value);
-            const user = this.user.id;
+            const filters = this.getFilters();
             this.loading = true;
             try {
-                if (cycles.length === 0 || !month || !year) {
+                if (filters.cycles.length === 0 || !filters.month || !filters.year) {
                     this.$toast.add({ severity: 'warn', summary: 'No filter selected', detail: 'Please select a date and cycle(s) to display spends', life: 4000 });
                     this.spends = [];
                     this.loading = false;
@@ -190,10 +306,10 @@ export default {
                 }
                 const response = await axios.get(`/spends/get`, {
                     params: {
-                        year: year,
-                        month: month,
-                        cycles: cycles,
-                        user: user,
+                        year: filters.year,
+                        month: filters.month,
+                        cycles: filters.cycles,
+                        user: filters.user,
                     },
                 });
 
@@ -212,13 +328,17 @@ export default {
     },
     watch: {
         cyclesSelected: {
-            handler: 'fetchSpends',
+            handler: function (newCyclesSelected) {
+                this.updateValues();
+            },
             deep: true
         },
-        monthYear: 'fetchSpends'
+        monthYear: function (newMonthYear) {
+            this.updateValues();
+        }
     },
     mounted() {
-        this.fetchSpends();
+        this.updateValues();
     },
     computed: {
         ...mapGetters('user', ['user']),
@@ -229,7 +349,37 @@ export default {
             return 'Select a period'
         },
         spendTotal() {
-            return this.getSpendTotal();
+            let total = 0;
+            this.spends.map(spend => {
+                total += spend.price;
+            })
+            return total;
+        },
+        incomeTotal() {
+            let total = 0;
+            // console.log(this.incomes)
+            this.incomes.map(income => {
+                total += income.value;
+            })
+            return total;
+        },
+        savingsTotal() {
+            let total = 0;
+            this.spends.map(spend => {
+                if (spend.category.name === "savings") {
+                    total += spend.price;
+                }
+            })
+            return total;
+        },
+        balanceTotal() {
+            let spendTotal = 0;
+            this.spends.map(spend => {
+                if (spend.is_paid) {
+                    spendTotal += spend.price;
+                }
+            })
+            return this.incomeTotal - spendTotal
         }
     }
 }

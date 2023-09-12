@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Interfaces\IncomeServiceInterface;
 use Illuminate\Support\ServiceProvider;
 
 //Service
@@ -14,6 +15,7 @@ use App\Interfaces\ProjectDetailedServiceInterface;
 use App\Interfaces\SpendCategoriesServiceInterface;
 use App\Interfaces\SpendServiceInterface;
 use App\Interfaces\UserServiceInterface;
+use App\Services\IncomeService;
 use App\Services\SpendCategoriesService;
 use App\Services\SpendService;
 use App\Services\UserService;
@@ -30,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(UserServiceInterface::class, UserService::class);
         $this->app->bind(SpendCategoriesServiceInterface::class, SpendCategoriesService::class);
         $this->app->bind(SpendServiceInterface::class, SpendService::class);
+        $this->app->bind(IncomeServiceInterface::class, IncomeService::class);
     }
 
     /**
