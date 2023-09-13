@@ -99,8 +99,7 @@ export default {
                     'project_highlights': this.project_highlights,
                     'other_teams_collab': this.other_teams_collab,
                 };
-                toastMessage('Details saved successfully!', 'loading', null, axios.post('/project_detailed', formData));
-                // await axios.post('/project_detailed', formData);
+                toastMessage('Details saved successfully!', 'loading', null, axios.post('/project-details/save', formData));
             }
             catch (error) {
                 console.error('Error submitting form: ', error);

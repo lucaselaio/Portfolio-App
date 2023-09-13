@@ -16,15 +16,15 @@ Route::post('/login-store', [LoginController::class, 'store'])->name('login.stor
 
 // Rotas de Projetos
 Route::prefix('projects')->group(function () {
-    Route::get('/', [ProjectController::class, 'list'])->name('projects.list');
+    Route::get('/get', [ProjectController::class, 'list'])->name('projects.list');
     Route::post('/store', [ProjectController::class, 'store'])->name('projects.store');
 });
 
 // Rotas de Detalhes do Projeto
 Route::prefix('project-details')->group(function () {
-    Route::get('/{id}', [ProjectDetailedController::class, 'show'])->name('project-details.show');
+    // Route::get('/{id}', [ProjectDetailedController::class, 'show'])->name('project-details.show');
     Route::get('/get-details/{id}', [ProjectDetailedController::class, 'getDetails'])->name('project-details.getDetails');
-    Route::post('/store', [ProjectDetailedController::class, 'store'])->name('project-details.store');
+    Route::post('/save', [ProjectDetailedController::class, 'store'])->name('project-details.store');
 });
 
 // Rotas de Categorias de Gastos
