@@ -37,11 +37,8 @@ class SpendService implements SpendServiceInterface
                 ->whereYear('due_date', $year)
                 ->whereMonth('due_date', $month)
                 ->whereIn('payment_cycle', $cycles)
+                ->where('user_id', $userId)
                 ->with('category');
-
-            if ($userId !== null) {
-                $query->where('user_id', $userId);
-            }
 
             return $query->get();
         } catch (\Throwable $th) {
