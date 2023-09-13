@@ -10,7 +10,7 @@ class ProjectsService implements ProjectsServiceInterface
 {
     public function fetchProjects()
     {
-        return Project::all();
+        return Project::orderBy('date_from', 'desc')->get();
     }
 
     public function preparePostData($request)
