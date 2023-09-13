@@ -14,7 +14,7 @@ const mutations = {
 
 const actions = {
     fetchProjects({ commit }) {
-        axios.get('/projects')
+        axios.get('/projects/get')
             .then(response => {
                 commit('setProjects', JSON.parse(response.data.success));
             })
@@ -23,7 +23,7 @@ const actions = {
             });
     },
     fetchProject({ commit }, id) {
-        axios.get(`/get_details/${id}`)
+        axios.get(`/project-details/get-details/${id}`)
             .then(response => {
                 commit('setProject', response.data.success);
                 return response.data.success;
