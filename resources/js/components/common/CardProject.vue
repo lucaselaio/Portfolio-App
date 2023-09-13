@@ -28,8 +28,7 @@
                 </LanguageIconPill>
             </div>
             <div class="d-flex justify-content-end">
-                <router-link :to="`/project_detailed/${project.project_id}`">See work experience detailed<i class="fa-solid fa-circle-chevron-right"></i></router-link>
-                <!-- <a :href="`/project_detailed/${project.project_id}`">See work experience detailed <i class="fa-solid fa-circle-chevron-right"></i></a> -->
+                <router-link :to="`/project-details/${project.project_id}`">See work experience detailed<i class="fa-solid fa-circle-chevron-right"></i></router-link>
             </div>
         </div>
     </div>
