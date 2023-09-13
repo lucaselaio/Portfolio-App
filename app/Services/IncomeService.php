@@ -21,11 +21,8 @@ class IncomeService implements IncomeServiceInterface
             $query = Income::query()
                 ->whereYear('payment_date', $year)
                 ->whereMonth('payment_date', $month)
-                ->whereIn('payment_cycle', $cycles);
-
-            if ($userId !== null) {
-                $query->where('user_id', $userId);
-            }
+                ->whereIn('payment_cycle', $cycles)
+                ->where('user_id', $userId);
 
             return $query->get();
         } catch (\Throwable $th) {
