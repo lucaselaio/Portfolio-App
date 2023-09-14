@@ -97,18 +97,7 @@ const routes = [
   {
     path: '/budget-control',
     name: 'budgetControl',
-    component: BudgetControl,
-    beforeEnter: async (to, from, next) => {
-      const authenticated = await isAuthenticated();
-      if (authenticated) {
-        next();
-      } else {
-        next({
-          path: '/login',
-          query: { redirect: to.fullPath }
-        });
-      }
-    }
+    component: BudgetControl
   },
   //Admin
   {
