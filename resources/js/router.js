@@ -77,20 +77,6 @@ const routes = [
     component: ProjectDetailsShow,
     props: true,
   },
-
-  // {
-  //   path: '/project-details/:id',
-  //   name: 'projectDetailed',
-  //   component: ProjectDetailsShow,
-  //   beforeEnter: async (to, from, next) => {
-  //       let id = to.params.id;
-  //       let result = await axios.get(`/project-details/${id}`);
-  //       to.params.details = result.data.success.projectDetails;
-  //       to.params.project = result.data.success.project
-  //       next();
-  //   },
-  //   props: true,
-  // },
   {
     path: '/create_details',
     name: 'projectDetailsCreate',

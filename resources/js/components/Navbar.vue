@@ -55,7 +55,18 @@ export default {
                     label: 'Work History',
                     icon: 'pi pi-briefcase',
                     to: { name: 'work' }
-                }
+                },
+                {
+                    label: 'Built Features',
+                    icon: 'pi pi-fw pi-code',
+                    items: [
+                        {
+                            label: 'Budget Control',
+                            icon: 'pi pi-fw pi-money-bill',
+                            to: { name: 'budgetControl' }
+                        },
+                    ]
+                },
             ];
             if (Object.keys(this.userInStore).length > 0) {
                 return [
