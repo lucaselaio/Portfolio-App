@@ -17,10 +17,10 @@
             <div>
                 <Toolbar class="mb-3">
                     <template #start>
-                        <Button label="Category" icon="pi pi-plus" severity="danger" class="mr-3"
+                        <Button size="small" label="Category" icon="pi pi-plus" severity="danger" class="mr-3"
                             @click="newCategory" />
-                        <Button label="Spend" icon="pi pi-plus" severity="danger" class="mr-3" @click="openSpendDialog" />
-                        <Button label="Income" icon="pi pi-plus" severity="warning" class=""
+                        <Button size="small" label="Spend" icon="pi pi-plus" severity="danger" class="mr-3" @click="openSpendDialog" />
+                        <Button size="small" label="Income" icon="pi pi-plus" severity="warning" class=""
                             @click="openIncomeDialog" />
                     </template>
                     <template #end>
@@ -174,11 +174,9 @@ export default {
             showIncomeDialog: false,
             spends: [],
             incomes: [],
+            maxCycle: 1*1,
             cyclesSelected: [{ name: 'Cycle 1', value: 1 }],
-            cycles: [
-                { name: 'Cycle 1', value: 1 },
-                { name: 'Cycle 2', value: 2 }
-            ],
+            cycles: [],
             editSpend: {},
             editIncome: {}
         };
@@ -236,17 +234,31 @@ export default {
                 }
             });
         },
-        updateValues() {
+        async fetchData(){
+            await this.fetchSpends();
+            await this.fetchIncome();
+        },
+        async updateValues() {
             const filters = this.getFilters();
             if (filters.cycles.length === 0 || !filters.month || !filters.year) {
-                this.$toast.add({ severity: 'warn', summary: 'No filter selected', detail: 'Please select a date and cycle(s) to display spends', life: 4000 });
+                this.$toast.add({ severity: 'warn', summary: 'No filter selected', detail: 'Please select a date and cycle(s) to display data', life: 4000 });
                 this.spends = [];
                 this.loading = false;
                 return
             }
             this.editSpend = {};
-            this.fetchSpends();
-            this.fetchIncome();
+            this.editIncome = {};
+            await this.fetchData();
+            if(this.spends?.length === 0 && this.incomes?.length === 0){
+                this.maxCycle = 1;
+            }
+            this.setCycles();
+        },
+        setCycles(){
+            this.cycles = []
+            for (let i = 1; i <= this.maxCycle; i++) {
+                this.cycles.push({ name: `Cycle ${i}`, value: i })
+            }
         },
         async updateIsPaid(id, isPaid) {
             this.loadingButton = true;
@@ -273,57 +285,48 @@ export default {
         async fetchIncome() {
             this.loading = true;
             const filters = this.getFilters();
-            try {
-                const response = await axios.get(`/income/get`, {
-                    params: {
-                        year: filters.year,
-                        month: filters.month,
-                        cycles: filters.cycles,
-                        user: filters.user,
-                    },
-                });
-
-                this.loading = false;
-                if (response.data) {
+            this.incomes = [];
+            await axios.get(`/income/get`, {
+                params: {
+                    year: filters.year,
+                    month: filters.month,
+                    cycles: filters.cycles,
+                    user: filters.user,
+                },
+            }).then(response => {
+                if (response?.data?.length > 0) {
+                    this.maxCycle = this.maxCycle > response?.data[0]?.max_cycle ? this.maxCycle : response.data[0].max_cycle;
                     this.incomes = response.data;
-                } else {
-                    this.incomes = [];
                 }
-            } catch (error) {
-                console.error('Error fetching spends:', error);
-                this.incomes = [];
-            }
+            }).catch(error => {
+                console.error('Error fetching income:', error);
+            }).finally(() => {
+                this.loading = false;
+                this.setCycles();
+            });
         },
         async fetchSpends() {
             const filters = this.getFilters();
             this.loading = true;
-            try {
-                if (filters.cycles.length === 0 || !filters.month || !filters.year) {
-                    this.$toast.add({ severity: 'warn', summary: 'No filter selected', detail: 'Please select a date and cycle(s) to display spends', life: 4000 });
-                    this.spends = [];
-                    this.loading = false;
-                    return
-                }
-                const response = await axios.get(`/spends/get`, {
-                    params: {
-                        year: filters.year,
-                        month: filters.month,
-                        cycles: filters.cycles,
-                        user: filters.user,
-                    },
-                });
-
-                this.loading = false;
-
-                if (response.data && response.data.success) {
+            this.spends = [];
+            await axios.get(`/spends/get`, {
+                params: {
+                    year: filters.year,
+                    month: filters.month,
+                    cycles: filters.cycles,
+                    user: filters.user,
+                },
+            }).then(response => {
+                if (response?.data?.success?.length > 0) {
+                    this.maxCycle = this.maxCycle > response?.data?.success[0]?.max_cycle ? this.maxCycle : response.data.success[0].max_cycle;
                     this.spends = response.data.success;
-                } else {
-                    this.spends = [];
                 }
-            } catch (error) {
+            }).catch(error => {
                 console.error('Error fetching spends:', error);
-                this.spends = [];
-            }
+            }).finally(() => {
+                this.loading = false;
+                this.setCycles();
+            })
         },
     },
     watch: {
@@ -339,6 +342,7 @@ export default {
     },
     mounted() {
         this.updateValues();
+        // this.setCycles();
     },
     computed: {
         ...mapGetters('user', ['user']),
@@ -357,7 +361,6 @@ export default {
         },
         incomeTotal() {
             let total = 0;
-            // console.log(this.incomes)
             this.incomes.map(income => {
                 total += income.value;
             })
