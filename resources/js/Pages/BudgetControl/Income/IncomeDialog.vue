@@ -97,7 +97,7 @@ export default {
                 let formData = {
                     user_id: this?.user?.id ?? null,
                     type: this.income.type.name,
-                    cycle: this.income.cycle,
+                    payment_cycle: this.income.cycle,
                     value: this.income.value,
                     payment_date: this.income.payment_date
                 }
