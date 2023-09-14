@@ -34,6 +34,7 @@ class SpendService implements SpendServiceInterface
     {
         try {
             $query = Spend::query()
+                ->selectRaw('*, (SELECT MAX(payment_cycle) FROM spends WHERE user_id = ?) AS max_cycle', [$userId])
                 ->whereYear('due_date', $year)
                 ->whereMonth('due_date', $month)
                 ->whereIn('payment_cycle', $cycles)

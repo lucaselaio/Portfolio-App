@@ -35,6 +35,9 @@
                 padding: 0px;
                 overflow-x: hidden; 
             }
+            html{
+                font-size: 13px;
+            }
         </style>
         <title>Lucas Azevedo | Portfolio</title>
     </head>

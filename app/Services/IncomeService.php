@@ -19,6 +19,7 @@ class IncomeService implements IncomeServiceInterface
     {
         try {
             $query = Income::query()
+                ->selectRaw('*, (SELECT MAX(payment_cycle) FROM income WHERE user_id = ?) AS max_cycle', [$userId])
                 ->whereYear('payment_date', $year)
                 ->whereMonth('payment_date', $month)
                 ->whereIn('payment_cycle', $cycles)
