@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex justify-content-center align-items-center mt-5">
+    <div class="flex align-items-center justify-content-center" style="padding-top: 15vh;">
         <Toast />
         <PageContent>
             <Card class="card cardBackground login">
