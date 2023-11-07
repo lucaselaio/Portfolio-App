@@ -63,6 +63,8 @@ import SelectButton from 'primevue/selectbutton';
 import ProgressSpinner from 'primevue/progressspinner';
 import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
+import TieredMenu from 'primevue/tieredmenu';
+import SplitButton from 'primevue/splitbutton';
 
 
 //components
@@ -130,6 +132,8 @@ app.component('SelectButton', SelectButton);
 app.component('ProgressSpinner', ProgressSpinner);
 app.component('TabView', TabView);
 app.component('TabPanel', TabPanel);
+app.component('TieredMenu', TieredMenu);
+app.component('SplitButton', SplitButton);
 
 //components
 app.component('main-component', MainComponent);
