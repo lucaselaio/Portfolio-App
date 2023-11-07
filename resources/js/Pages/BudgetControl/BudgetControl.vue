@@ -7,15 +7,15 @@
                     <button class="p-panel-header-icon p-link mr-2" @click="toggle">
                     </button>
                 </template>
-                <div class="budgetCards gap-2">
-                    <BudgetCards :amount="balanceTotal" title="Balance" backgroundColor="--success-color" />
-                    <BudgetCards :amount="savingsTotal" title="Savings" backgroundColor="--help-color" />
-                    <BudgetCards :amount="incomeTotal" title="Recent Income" backgroundColor="--warning-color" />
-                    <BudgetCards :amount="spendTotal" title="Spend Total" backgroundColor="--danger-color" />
+                <div class="d-flex flex-wrap gap-3">
+                    <BudgetCards class="cardItem" :amount="balanceTotal" title="Balance" backgroundColor="--success-color" />
+                    <BudgetCards class="cardItem" :amount="savingsTotal" title="Savings" backgroundColor="--help-color" />
+                    <BudgetCards class="cardItem" :amount="incomeTotal" title="Recent Income" backgroundColor="--warning-color" />
+                    <BudgetCards class="cardItem" :amount="spendTotal" title="Spend Total" backgroundColor="--danger-color" />
                 </div>
             </Panel>
             <div>
-                <Toolbar class="mb-3">
+                <Toolbar class="d-flex flex-wrap">
                     <template #start>
                         <Button label="Category" icon="pi pi-plus" severity="danger" class="mr-3"
                             @click="newCategory" />
@@ -75,10 +75,30 @@
                                 </Column>
                                 <Column field="actions" style="width: 10%;" header="Actions">
                                     <template #body="slotProps">
-                                        <Button @click="editSpendDialog(slotProps.data)" icon="pi pi-pencil"
-                                            severity="warning" text rounded />
-                                        <Button icon="pi pi-times" severity="danger" text rounded
-                                            @click="deleteSpend(slotProps.data.id)" />
+                                        <SplitButton :model="[
+                                                {
+                                                    label: 'Edit',
+                                                    icon: 'pi pi-pencil',
+                                                    command: () => {
+                                                        this.editSpendDialog(slotProps.data)
+                                                    },
+                                                },
+                                                {
+                                                    label: 'Delete',
+                                                    icon: 'pi pi-times',
+                                                    command: () => {
+                                                        this.deleteSpend(slotProps.data.id)
+                                                    },
+                                                }
+                                                ,
+                                                {
+                                                    label: 'Replicate in next month',
+                                                    icon: 'pi pi-reply',
+                                                    command: () => {
+                                                        this.replicateNextMonth(slotProps.data)
+                                                    },
+                                                }
+                                            ]" label="Actions" severity="primary"/>
                                     </template>
                                 </Column>
                                 <template #empty>
@@ -249,6 +269,36 @@ export default {
             this.fetchSpends();
             this.fetchIncome();
         },
+        incrementMonthAndYear(dateString) {
+            const originalDate = new Date(dateString);
+            originalDate.setUTCMonth(originalDate.getUTCMonth() + 1);
+
+            return originalDate.toISOString().slice(0, 19).replace('T', ' ');
+        },
+        replicateNextMonth(data) {
+            try {
+                let formData = {
+                    name: data.name,
+                    price: data.price,
+                    user_id: data.user_id,
+                    spend_category_id: data.spend_category_id,
+                    due_date: this.incrementMonthAndYear(data.due_date),
+                    payment_cycle: data.payment_cycle
+                }
+                let url = '/spends/save';
+                axios.post(url, formData).then(response => {
+                    this.loading = false;
+                    this.$toast.add({ severity: 'success', summary: 'Spend', detail: `Spend replicated successfully!`, life: 3000 });
+                }).catch(error => {
+                    this.loading = false;
+                    const errorMessage = error.message
+                    this.$toast.add({ severity: 'error', summary: 'Spend', detail: errorMessage, life: 3000 });
+                })
+            }
+            catch (error) {
+                console.error('Error submitting form: ', error);
+            }
+        },
         async updateIsPaid(id, isPaid) {
             this.loadingButton = true;
             await axios.post('/spends/set-id-paid', {
@@ -391,6 +441,11 @@ export default {
     display: flex;
     justify-content: space-around;
     flex-direction: row;
+}
+
+.cardItem{
+    flex-grow: 1;
+    flex-basis: 200;
 }
 
 @media screen and (max-width: 500px) {
