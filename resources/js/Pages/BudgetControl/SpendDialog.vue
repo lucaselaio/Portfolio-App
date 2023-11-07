@@ -152,8 +152,6 @@ export default {
                     this.submitted = false
                     this.hideDialog()
                 })
-
-
             }
             catch (error) {
                 console.error('Error submitting form: ', error);
