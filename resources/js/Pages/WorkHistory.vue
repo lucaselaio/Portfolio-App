@@ -1,30 +1,39 @@
 <template>
     <div>
         <PageContent>
-            <Timeline :value="projects" align="alternate" class="customized-timeline">
-            <template #content="slotProps">
-                <Card class="mt-3">
+                <Card v-for="(project) in projects" class="mt-3">
                     <template #title>
-                        {{ slotProps.item.project_name }}
-                        <img @click="openOnNewTab(slotProps.item.project_url)" class="rounded"
-                        style="cursor: pointer;" width="80" height="80"
-                        :src="`images/${transformImageName(slotProps.item.project_name)}.jpg`" />
-                        
+                        {{ project.project_name }}
+                        <img 
+                            @click="openOnNewTab(project.project_url)" 
+                            class="rounded"
+                            style="float: right; cursor: pointer;" width="80" height="80"
+                            :src="`images/${transformImageName(project.project_name)}.jpg`" 
+                        />
                     </template>
                     <template #subtitle>
-                        {{ getFormattedDateRange(slotProps.item.date_from, slotProps.item.date_to) }}
+                        {{ getFormattedDateRange(project.date_from, project.date_to) }}
+                        <hr>
+                        <div class="techList d-flex flex-wrap align-items-center">
+                            <div>
+                                <h6>Thecnologies used:</h6>
+                            </div>
+                            <LanguageIconPill class="m-2 d-flex align-items-center" v-for="(techDescription, techName) in project.technologies" :key="techName">
+                                <img width="30" height="30" :src="iconsUrl[techName]" />
+                                <p style="font-size: 10px; margin: 0; margin-left: 5px;">{{ techDescription }}</p>
+                            </LanguageIconPill>
+                        </div>
                     </template>
                     <template #content>
                         <p style="text-align: justify;text-justify: inter-word;">
-                            {{ getAboutText(slotProps.item.about) }}
+                            {{ getAboutText(project.about) }}
                         </p>
-                        <router-link :to="`/project-details/${slotProps.item.project_id}`">
-                            <Button label="Read more" text></Button>
+                        <router-link :to="`/project-details/${project.project_id}`">
+                            
+                            <Button label="Check experience details..." text icon="pi pi-arrow-up-right"></Button>
                         </router-link>
                     </template>
                 </Card>
-            </template>
-        </Timeline>
         </PageContent>
     </div>
 </template>
@@ -32,8 +41,14 @@
 import PageContent from '../components/common/PageContent.vue';
 import { mapActions, mapGetters } from 'vuex';
 import { extractFieldFromJson, getDateFromToString } from '../util.js';
+import devIcons from '../devIcons';
 export default {
     name: 'WorkHistory',
+    data() {
+        return {
+            iconsUrl: devIcons
+        }
+    },
     components: {
         PageContent
     },
