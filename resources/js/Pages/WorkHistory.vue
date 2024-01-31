@@ -29,7 +29,8 @@
                             {{ getAboutText(project.about) }}
                         </p>
                         <router-link :to="`/project-details/${project.project_id}`">
-                            <Button label="Read more" text></Button>
+                            
+                            <Button label="Check experience details..." text icon="pi pi-arrow-up-right"></Button>
                         </router-link>
                     </template>
                 </Card>
