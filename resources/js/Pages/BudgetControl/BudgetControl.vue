@@ -9,7 +9,7 @@
                 </template>
                 <div class="d-flex flex-wrap gap-3">
                     <BudgetCards class="cardItem" :amount="balanceTotal" title="Balance" backgroundColor="--success-color" />
-                    <BudgetCards class="cardItem" :amount="savingsTotal" title="Savings" backgroundColor="--help-color" />
+                    <!-- <BudgetCards class="cardItem" :amount="savingsTotal" title="Savings" backgroundColor="--help-color" /> -->
                     <BudgetCards class="cardItem" :amount="incomeTotal" title="Recent Income" backgroundColor="--warning-color" />
                     <BudgetCards class="cardItem" :amount="spendTotal" title="Spend Total" backgroundColor="--danger-color" />
                 </div>
@@ -25,6 +25,7 @@
                     </template>
                     <template #end>
                         <Calendar class="mr-3" v-model="monthYear" view="month" dateFormat="mm/yy" inputId="monthYear" />
+                        <span>Cycle(s): &nbsp;&nbsp;</span>
                         <SelectButton class="mr-3" id="cycles" v-model="cyclesSelected" :options="cycles" optionLabel="name" multiple
                             aria-labelledby="multiple" />
                         <Button icon="pi pi-refresh" severity="primary" @click="updateValues" text raised aria-label="Refresh" />
@@ -195,10 +196,9 @@ export default {
             showIncomeDialog: false,
             spends: [],
             incomes: [],
-            cyclesSelected: [{ name: 'Cycle 1', value: 1 }],
+            cyclesSelected: [{ name: '1', value: 1 }],
             cycles: [
-                { name: 'Cycle 1', value: 1 },
-                { name: 'Cycle 2', value: 2 }
+                { name: '1', value: 1 }
             ],
             editSpend: {},
             editIncome: {}
@@ -313,6 +313,7 @@ export default {
             });
         },
         getFilters() {
+
             return {
                 month: this.monthYear.getMonth() + 1,
                 year: this.monthYear.getFullYear(),
@@ -376,6 +377,21 @@ export default {
                 this.spends = [];
             }
         },
+        updateCycles(currentMax, newMax){
+            this.cycles.forEach(item => {
+                if (item.value > currentMax) {
+                    currentMax = item.value;
+                }
+            });
+
+            if(newMax > currentMax){
+                for(let i = currentMax ; i <= newMax ; i++){
+                    if(i > currentMax){
+                        this.cycles.push({name: i, value: i});
+                    }
+                }
+            }
+        }
     },
     watch: {
         cyclesSelected: {
@@ -386,6 +402,17 @@ export default {
         },
         monthYear: function (newMonthYear) {
             this.updateValues();
+        },
+        spends: function(spends) {
+            const maxCycleSpends = spends[0]?.max_cycle;
+            const maxCycle = this.cycles[0].value;
+            this.updateCycles(maxCycle, maxCycleSpends);
+            
+        },
+        incomes: function(incomes) {
+            const maxCycleIncomes = incomes[0]?.max_cycle;
+            const maxCycle = this.cycles[0].value;
+            this.updateCycles(maxCycle, maxCycleIncomes);
         }
     },
     mounted() {
